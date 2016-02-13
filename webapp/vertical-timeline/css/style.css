@@ -36,6 +36,19 @@ h1, h2 {
   font-weight: bold;
 }
 
+/*Navigation*/
+ul{
+  position:fixed;
+  width:100%;
+  background: #222;
+  color:#fff;
+}
+.nav {
+  padding: 20px;
+  text-align: center;
+  display: inline;
+  font-size: 20px;
+}
 /* -------------------------------- 
 
 Modules - reusable parts of our design
