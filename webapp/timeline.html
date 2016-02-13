@@ -137,8 +137,15 @@ the background related to her fall and her medical history to another group of p
 	for(i = 0; i < events.length; i++)
 	{
 		eventsContent.push(generateContent(events[i]));
-		timeline.appendChild(blockGen(eventsContent[i]));
 	}
+	var filtered = filter(events,eventsContent,"-severe");
+	for(i = 0; i < filtered.length; i++)
+	{
+		timeline.appendChild(blockGenJSON(filtered[i]));
+	}
+
+
+	timeline.appendChild(blockGen(eventsContent[i]));
 
 	//////
 	function changeHeader(newTitle)
@@ -147,6 +154,10 @@ the background related to her fall and her medical history to another group of p
 	}
 
 	//Generates a block based on the content strings
+	function blockGenJSON(jsonData)
+	{
+		return blockGen(generateContent(jsonData));
+	}
 	function blockGen(contentStr)
 	{
 		var titleArray = contentStr.match("<e>(.+?)<\/e>");

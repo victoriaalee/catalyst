@@ -93,37 +93,35 @@ function searchResourcePatient(url,resource,patient)
 	return searchResourcePatientID(url,resource,patient.id);
 }
 
-<<<<<<< HEAD
 function filter(jsonData,content,query) {
 	results = new Set();
 	exclude = new Set();
 	query = query.toLowerCase();
 	queryArray = query.split(", ");
 
-	for (int j = 0; j < query.length(); j++) {
-		if (query[j].indexOf("&") != -1) {
-			newQuery = query[j].split(" & ");
+	for (j = 0; j < queryArray.length; j++) {
+		if (queryArray[j].indexOf("&") != -1) {
+			newQuery = queryArray[j].split(" & ");
 			results = containsWord(jsonData,content,newQuery,results);
 		} else if (query[j].charAt(0) == '-') {
-			newQuery = query[j].substring(1);
+			newQuery = queryArray[j].substring(1);
 			exclude = containsWord(jsonData,content,newQuery,exclude);
 		}
 		else {
-			newQuery = containsWord(jsonData,content,newQuery,results);
+			results = containsWord(jsonData,content,queryArray[j],results);
 		}
 	}
-
-	results = containsWord(jsonData,content,word,results);
-	results = results.filter( function(el) { return toRemove.indexOf(exclude) < 0; } );		// remove nots
-	return results;
+	var resultsArr = Array.from(results);
+	var excludeArr = Array.from(exclude);
+	return resultsArr.filter( function(el) { return excludeArr.indexOf(resultsArr) < 0; } );		// remove nots
 }
 
 function containsWord(jsonData,content,query,results) {
-	for (i = 0; i < jsonData.length(); i++) {
+	for (i = 0; i < jsonData.length; i++) {
 		tmp = true;
-		for (j = 0; j < query.length(); j++) {
+		for (j = 0; j < query.length; j++) {
 			pattern = new RegExp(query[j]);
-			if (!pattern.test(content[i]).toLowerCase()) {
+			if (!pattern.test(content[i].toLowerCase())) {
 				tmp = false;
 				break;
 			}
@@ -135,7 +133,6 @@ function containsWord(jsonData,content,query,results) {
 
 	return results;
 }
-=======
 
 //Will generate a content string of words
 //<></>   delimits the resourcetype
@@ -146,14 +143,18 @@ function containsWord(jsonData,content,query,results) {
 
 function generateContent(jason)
 {
+	if(jason == null || jason == undefined)
+	{
+		return "";
+	}
 	var type = jason.resourceType;
 	var output = inType(jason.ResourceType);
 	switch(type)
 	{
 	case "Observation":
-		var title = obs[i].code.coding[0].display;
-		var content = obs[i].text.div;
-		var date = obs[i].effectiveDateTime;
+		var title = jason.code.coding[0].display;
+		var content = jason.text.div;
+		var date = jason.effectiveDateTime;
 		output += concat(inEmphasis(title));
 		output += concat(inNormal(content));
 		output += concat(inTime(getDate(date)));
@@ -209,4 +210,3 @@ function inEmphasis(input) { return ("<e>" + input + "</e>");}
 function inID(input) { return ("<i>" + input + "</i>");}
 function inNormal(input) { return ("<n>" + input + "</n>");}
 function inTime(input) { return ("<t>" + input + "</t>");}
->>>>>>> 24da5079850799b2635fb58614f83757674c7e00
