@@ -75,6 +75,16 @@ li a:hover{
 .data_input{
   font:20px;
 }
+/*Background stuff*/
+.background_text{
+  font:10px;
+  text-align: center;
+  padding: 14px 16px;
+  margin: 14px 16px;
+  border-radius: 20px;
+  background: #fff;
+  color: #000;
+}
 /* -------------------------------- 
 
 Modules - reusable parts of our design
