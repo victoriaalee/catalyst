@@ -1,0 +1,19 @@
+<html>
+	<script src="helloworldJSON.js"></script>
+	<script>
+		document.write("hello! ");
+		var protocol = "http";
+		var base = "fhir2.healthintersections.com.au/open";
+		var search = "Patient?name=john&_format=json";
+		var url = protocol+"://"+base+"/"+search;
+		document.write("URL: "+url);
+		var jason = getREST(url);
+		document.write(" end!");
+		var patients = jason.entry;
+		var patient;
+		for(i = 0; i < patients.length; i++)
+		{
+			document.write(patients[i].resource.name[0].given+" " + patients[i].resource.name[0].family + ", ");
+		}
+	</script>
+</html>
