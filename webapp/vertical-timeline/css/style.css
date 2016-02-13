@@ -38,16 +38,20 @@ h1, h2 {
 
 /*Navigation*/
 ul{
-  position:fixed;
   width:100%;
   background: #222;
   color:#fff;
+  position: fixed;
+  height: 5%;
+  top:0;
+  vertical-align: middle;
+  z-index: 100;
 }
-.nav {
-  padding: 20px;
+li {
   text-align: center;
   display: inline;
-  font-size: 20px;
+  font-size: 25px;
+  padding-right: 30px;
 }
 /* -------------------------------- 
 
@@ -73,10 +77,12 @@ Main components
 
 -------------------------------- */
 header {
-  height: 200px;
+  height: 100px;
+  width: 100%;
   line-height: 200px;
   text-align: center;
   background: #303e49;
+  z-index: 49;
 }
 header h1 {
   color: white;
