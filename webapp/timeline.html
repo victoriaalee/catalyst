@@ -33,13 +33,8 @@
 	<div class="fillerbox"></div>
 	<div class="section_header">Timeline</div>
 		<p class="data_input">Keyword:</p>
-		<input class="data_input" type="text" name="keyword" id="input2">
+		<input class="data_input" type="text" name="keyword" id="input1">
 		<button class="data_input" onclick="timelineInput()">Submit</button>
-		<script type="text/javascript">
- function timelineInput(){
-    var text=document.getElementById('input1').value;
- }
-</script>
 	<section id="cd-timeline" class="cd-container">
 
 		
@@ -105,6 +100,9 @@ the background related to her fall and her medical history to another group of p
 		<p class="data_input">Keyword:</p>
 	<input class="data_input" type="text" name="keyword" id="input2">
 	<button class="data_input" onclick="dataInput()">Submit</button>
+	<div name="dataSection">
+
+	</div>
 	<script type="text/javascript">
  function dataInput(){
     var text=document.getElementById('input2').value;
@@ -118,11 +116,14 @@ the background related to her fall and her medical history to another group of p
 <script src="js/fhir.js"></script>
 <script src="vertical-timeline/js/timeline.js"></script>
 <script>
+	var filter = "";
 	var url = "http://fhir2.healthintersections.com.au/open";
 	var patientID = "ad2f3d7c-4274-4422-a10a-8e2bc99c40";
 	//var patientID = "example";
 	
 	var timeline = document.getElementById("cd-timeline");
+	var data = document.getElementById("dataSection");
+
 	var patient = searchPatientID(url, patientID);
 	var patientName = patient.name[0].given[0] + " " + patient.name[0].family[0];
 	changeHeader(patientName);
@@ -138,16 +139,35 @@ the background related to her fall and her medical history to another group of p
 	{
 		eventsContent.push(generateContent(events[i]));
 	}
-	var filtered = filter(events,eventsContent,"-severe");
-	for(i = 0; i < filtered.length; i++)
-	{
-		timeline.appendChild(blockGenJSON(filtered[i]));
-	}
-
-
-	timeline.appendChild(blockGen(eventsContent[i]));
+	
 
 	//////
+	function removeChildren(dom)
+	{
+		while(dom.firstChild)
+		{
+			dom.removeChild(timeline.firstChild);
+		}
+	}
+
+	function setTimeline(jsonObjects)
+	{
+		removeChildren(timeline);
+		for(i = 0; i < jsonObjects.length; i++)
+		{
+			timeline.appendChild(blockGenJSON(jsonObjects[i]));
+		}
+	}
+
+	function setData(jsonObjects)
+	{
+		removeChildren(timeline);
+		for(i = 0; i < jsonObjects.length; i++)
+		{
+			data.appendChild(blockGenJSON(jsonObjects[i]));
+		}
+	}
+
 	function changeHeader(newTitle)
 	{
 		document.getElementById("headline").innerHTML = newTitle;
@@ -168,6 +188,13 @@ the background related to her fall and her medical history to another group of p
 		var date = dateArray!=null?dateArray[0]:"";
 		return generateBlock(title,content,date);
 	}
+
+	//
+	function timelineInput(){
+    	filter = document.getElementById('input1').value;
+    	var filtered = filterContent(events,eventsContent,filter);
+    	setTimeline(filtered);
+ 	}
 </script>
 </body>
 </html>

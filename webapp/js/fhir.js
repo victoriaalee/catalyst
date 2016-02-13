@@ -93,27 +93,38 @@ function searchResourcePatient(url,resource,patient)
 	return searchResourcePatientID(url,resource,patient.id);
 }
 
-function filter(jsonData,content,query) {
+function filterContent(jsonData,content,query) {
+	if(query == "")
+		return jsonData;
+	cornerCase0 = false;
 	results = new Set();
 	exclude = new Set();
 	query = query.toLowerCase();
 	queryArray = query.split(", ");
 
-	for (j = 0; j < queryArray.length; j++) {
+	for (var j = 0; j < queryArray.length; j++) {
 		if (queryArray[j].indexOf("&") != -1) {
 			newQuery = queryArray[j].split(" & ");
 			results = containsWord(jsonData,content,newQuery,results);
 		} else if (query[j].charAt(0) == '-') {
-			newQuery = queryArray[j].substring(1);
+			newQuery = [queryArray[j].substring(1)];
 			exclude = containsWord(jsonData,content,newQuery,exclude);
+
+			if (queryArray.length == 1) {
+				resultsArr = jsonData;
+				cornerCase0 = true;
+			}
 		}
 		else {
-			results = containsWord(jsonData,content,queryArray[j],results);
+			newQuery = [queryArray[j]];
+			results = containsWord(jsonData,content,newQuery,results);
 		}
 	}
-	var resultsArr = Array.from(results);
+	if (!cornerCase0)
+		var resultsArr = Array.from(results);
 	var excludeArr = Array.from(exclude);
-	return resultsArr.filter( function(el) { return excludeArr.indexOf(resultsArr) < 0; } );		// remove nots
+
+	return resultsArr.filter( function(el) { return excludeArr.indexOf(el) < 0; } );		// remove nots
 }
 
 function containsWord(jsonData,content,query,results) {
