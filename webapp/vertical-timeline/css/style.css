@@ -48,10 +48,16 @@ ul{
   z-index: 100;
 }
 li {
+  float:left;
+}
+li a{
+  display: block;
+  color: #fff;
   text-align: center;
-  display: inline;
-  font-size: 25px;
-  padding-right: 30px;
+  padding: 14px 16px;
+}
+li a:hover{
+  background:#555;
 }
 /* -------------------------------- 
 
