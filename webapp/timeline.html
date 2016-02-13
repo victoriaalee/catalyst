@@ -16,40 +16,24 @@
 <body>
 	<header>
 		<h1 id="headline">Responsive Vertical Timeline</h1>
-<<<<<<< HEAD
-
-
 	</header>
 	
-	</header>
-	</header>
 	<section>
-=======
-	</header>	
-	</header>
-	</header>
->>>>>>> origin/master
 		<ul>
 			<li class="nav"><a href="#timeline">Timeline</a></li>
 			<li class="nav"><a href="#background">Background</a></li>
 			<li class="nav"><a href="#data">Data</a></li>
 		</ul>
-<<<<<<< HEAD
 	<a name="timeline"/>
 
 	
 	</section>
-	
-
-=======
-
 
 	<a name="timeline"/>
 	<div class="fillerbox"></div>
 	<div class="section_header">Timeline</div>
 		<p class="data_input">Keyword:</p>
 	<input class="data_input" type="text" name="keyword">
->>>>>>> origin/master
 	<section id="cd-timeline" class="cd-container">
 
 		
@@ -129,22 +113,23 @@ the background related to her fall and her medical history to another group of p
 	
 	var timeline = document.getElementById("cd-timeline");
 	var patient = searchPatientID(url, patientID);
-	var obs = searchResourcePatient(url, "Observation", patient);
 	var patientName = patient.name[0].given[0] + " " + patient.name[0].family[0];
 	changeHeader(patientName);
-	for(i = 0; i < obs.length; i++)
-	{
-		var block = blockGen(generateContent(obs[i]));
-		timeline.appendChild(block);
-	}
 
+	var obs = searchResourcePatient(url, "Observation", patient);
 	var enc = searchResourcePatient(url, "Encounter", patient);
-	for(i = 0; i < enc.length; i++)
+	var aly= searchResourcePatient(url, "AllergyIntolerance", patient);
+	var con = searchResourcePatient(url, "Condition", patient);
+
+	var events = con.concat(aly.concat((enc.concat(obs))));
+	var eventsContent = [];
+	for(i = 0; i < events.length; i++)
 	{
-		var block = blockGen(generateContent(enc[i]));
-		timeline.appendChild(block);
+		eventsContent.push(generateContent(events[i]));
+		timeline.appendChild(blockGen(eventsContent[i]));
 	}
 
+	//////
 	function changeHeader(newTitle)
 	{
 		document.getElementById("headline").innerHTML = newTitle;

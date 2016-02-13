@@ -20,3 +20,30 @@ function setCookieExpire(cname, cvalue, exdays)
     var expires = "expires="+d.toUTCString();
     document.cookie = cname + "=" + cvalue + "; " + expires;
 }
+
+//returns - if date1 is before date2
+//returns 0 if date1 is same as date2
+//returns + if date1 is after date2
+function dateCompare(date1,date2)
+{
+	a1 = date1.split("-");
+	a2 = date2.split("-");
+	var num1,num2,res;
+
+	num1 = parseInt(a1[0]);
+	num2 = parseInt(a2[0]);
+	res = num1-num2;
+	if(res != 0)
+		return res;
+
+	num1 = parseInt(a1[1]);
+	num2 = parseInt(a2[1]);
+	res = num1-num2;
+	if(res != 0)
+		return res;
+
+	num1 = parseInt(a1[2]);
+	num2 = parseInt(a2[2]);
+	res = num1-num2;
+	return res;
+}

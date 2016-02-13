@@ -104,14 +104,13 @@ function searchResourcePatient(url,resource,patient)
 function generateContent(jason)
 {
 	var type = jason.resourceType;
-	var output = "";
+	var output = inType(jason.ResourceType);
 	switch(type)
 	{
 	case "Observation":
 		var title = obs[i].code.coding[0].display;
-		var content = obs[i].comments;
+		var content = obs[i].text.div;
 		var date = obs[i].effectiveDateTime;
-		output += concat(inType("Observation"));
 		output += concat(inEmphasis(title));
 		output += concat(inNormal(content));
 		output += concat(inTime(getDate(date)));
@@ -130,10 +129,17 @@ function generateContent(jason)
 			var end = getDate(jason.period.end);
 			var date = start + " - " + end;
 		}
-		output += concat(inType("Encounter"));
 		output += concat(inEmphasis(title));
 		output += concat(inNormal(content));
 		output += concat(inTime(date));
+		break;
+	case "AllergyIntolerance":
+		var display = jason.substance.coding[0].display;
+		output += concat(inEmphasis(display));
+		break;
+	case "Condition":
+		output += concat(inEmphasis( jason.code.coding[0].display + ": " + jason.severity.coding[0].display));
+		output += concat(inNormal(jason.text.div));
 		break;
 	}
 	return output;
