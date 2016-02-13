@@ -12,35 +12,94 @@
 	
 	<title>Patient Timeline</title>
 </head>
+
 <body>
 	<header>
 		<h1 id="headline">Responsive Vertical Timeline</h1>
-<<<<<<< HEAD
+	</header>
 	
-	</header>
-=======
-	</header>
 	<section>
->>>>>>> origin/master
 		<ul>
 			<li class="nav"><a href="#timeline">Timeline</a></li>
 			<li class="nav"><a href="#background">Background</a></li>
 			<li class="nav"><a href="#data">Data</a></li>
 		</ul>
-<<<<<<< HEAD
 	<a name="timeline"/>
-=======
-	</section>
-	
 
->>>>>>> origin/master
+	
+	</section>
+
+	<a name="timeline"/>
+	<div class="fillerbox"></div>
+	<div class="section_header">Timeline</div>
+		<p class="data_input">Keyword:</p>
+	<input class="data_input" type="text" name="keyword">
 	<section id="cd-timeline" class="cd-container">
 
 		
 	</section> 
 	<a name="background"/>
-	<a name="data"/>
+	<div class="fillerbox"></div>
+	<div class="section_header">Background</div>
+	<div class="background_text">
+		<p>
+			Bob Griffin could see the image as clearly as if it had just happened. He had returned home from a
 
+trip to the grocery store to find his wife Jane in a heap at the foot of their basement stairs. She had 
+
+fallen and hit her head on the concrete flooring, was now semi-conscious, with a small pool of blood 
+
+next to her head. Jane had undergone an emergency craniotomy to relieve the pressure a blood clot 
+
+was putting on her brain. While the surgery eliminated the pressure, Jane’s walking was still unstable 
+
+and she was having some difficulty speaking and swallowing. The medications for her chronic 
+
+osteoarthritis and cardiovascular disease had to be crushed so Jane could swallow them.
+		</p>
+		<p>Jane’s primary care physician informed Bob that Jane would need rehabilitative services to regain her
+
+ability to walk unassisted, restore her speech and swallow sufficiently to resume her normal diet. Given 
+
+her current condition, he recommended Jane be transferred to a rehabilitation facility that was near 
+
+their home. The location would make it easier for Bob to visit Jane and it had a history of being able 
+
+to help people in Jane’s condition return to their former level of daily activities. The transfer occurred 
+
+the following day and Bob met the physician, nurse and therapists who would be responsible for Jane’s 
+
+care. He was encouraged by their prognosis for Jane, but it was painful to recount the details of her 
+
+fall and frustrating to have to provide the date of her surgery, her allergies, current medications and 
+
+other medical problems. He had been through all of this at the hospital – why didn’t they have all of 
+
+this information?</p>
+		<p>Thankfully, Jane made rapid progress. In three months she was able to walk with a cane, her speech
+
+was almost back to normal and her swallowing had progressed to the point where she could return to 
+
+her typical daily diet. She’d be discharged to home in a week. The home health company would send 
+
+a therapist to make sure Jane didn’t have any issues navigating her home surroundings and was able 
+
+to manage all of her daily activities, including her exercise plan to eliminate the need for the cane and 
+
+further strengthen her swallowing muscles. Bob was looking forward to having Jane back home and 
+
+no longer making the daily trip to the rehab facility. He just hoped he and Jane didn’t have to recount 
+
+the background related to her fall and her medical history to another group of people.</p>
+	</div>
+
+	<a name="data"/>
+	<div class="fillerbox"></div>
+	<div class="section_header">Patient Data</div>
+		<p class="data_input">Keyword:</p>
+	<input class="data_input" type="text" name="keyword">
+	
+	<div class="fillerbox"></div>
 	<!-- cd-timeline -->
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <script src="vertical-timeline/js/main.js"></script> <!-- Resource jQuery -->
@@ -54,48 +113,38 @@
 	
 	var timeline = document.getElementById("cd-timeline");
 	var patient = searchPatientID(url, patientID);
-	var obs = searchResourcePatient(url, "Observation", patient);
 	var patientName = patient.name[0].given[0] + " " + patient.name[0].family[0];
 	changeHeader(patientName);
-	for(i = 0; i < obs.length; i++)
-	{
-		var title = obs[i].code.coding[0].display;
-		var content = obs[i].comments;
-		var date = obs[i].effectiveDateTime;
-		var img = "vertical-timeline/img/cd-icon-picture.svg";
-		var block = generateBlock(title,content,date,img);
-		timeline.appendChild(block);
-	}
 
+	var obs = searchResourcePatient(url, "Observation", patient);
 	var enc = searchResourcePatient(url, "Encounter", patient);
-	for(i = 0; i < enc.length; i++)
+	var aly= searchResourcePatient(url, "AllergyIntolerance", patient);
+	var con = searchResourcePatient(url, "Condition", patient);
+
+	var events = con.concat(aly.concat((enc.concat(obs))));
+	var eventsContent = [];
+	for(i = 0; i < events.length; i++)
 	{
-		var loc = retrieveReference(url,enc[i].location[0].location.reference);
-		var title = loc.name;
-		var content = enc[i].class;
-		if(enc[i].period == undefined)
-		{
-			date = "";
-		}
-		else
-		{
-			var startRaw = enc[i].period.start;
-			var endRaw = enc[i].period.end;
-			var startEnd= startRaw.indexOf("T");
-			var endEnd= endRaw.indexOf("T");
-			var start = startRaw.substring(0,startEnd);
-			var end = endRaw.substring(0,endEnd);
-			var date = start + " - " + end;
-		}
-		
-		var img = "vertical-timeline/img/cd-icon-movie.svg";
-		var block = generateBlock(title,content,date,img);
-		timeline.appendChild(block);
+		eventsContent.push(generateContent(events[i]));
+		timeline.appendChild(blockGen(eventsContent[i]));
 	}
 
+	//////
 	function changeHeader(newTitle)
 	{
 		document.getElementById("headline").innerHTML = newTitle;
+	}
+
+	//Generates a block based on the content strings
+	function blockGen(contentStr)
+	{
+		var titleArray = contentStr.match("<e>(.+?)<\/e>");
+		var contentArray = contentStr.match("<n>(.+?)<\/n>");
+		var dateArray = contentStr.match("<t>(.+?)<\/t>");
+		var title = titleArray!=null?titleArray[0]:"";
+		var content = contentArray!=null?contentArray[0]:"";
+		var date = dateArray!=null?dateArray[0]:"";
+		return generateBlock(title,content,date);
 	}
 </script>
 </body>
