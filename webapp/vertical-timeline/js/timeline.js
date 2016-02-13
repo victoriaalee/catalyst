@@ -13,9 +13,34 @@
 </div> <!-- cd-timeline-block -->
 */
 
-function generateBlock(container,imageUrl,titleString,contentString,readMoreString,dateString)
+//Returns a div block to add to the timeline
+function generateBlock(titleString,contentString,dateString,imageSrc)
 {
-	var blockDiv = document.create("div");
-	var title = document.create("h2");
-	var content = document.create("p");
+	var blockDiv = document.createElement("div");
+	var imgDiv = document.createElement("div");
+	var contentDiv = document.createElement("div");
+	var img = document.createElement("img")
+	var title = document.createElement("h2");
+	var content = document.createElement("p");
+	var date = document.createElement("span");
+
+	blockDiv.className = "cd-timeline-block";
+	imgDiv.className = "cd-timeline-img cd-picture";
+	contentDiv.className = "cd-timeline-content";
+	img.src = imageSrc;
+	img.alt = "Picture";
+	date.className = "cd-date";
+	title.innerHTML = titleString;
+	content.innerHTML = contentString;
+	date.innerHTML = dateString;
+
+	imgDiv.appendChild(img);
+	contentDiv.appendChild(title);
+	contentDiv.appendChild(content);
+	contentDiv.appendChild(date);
+
+	blockDiv.appendChild(imgDiv);
+	blockDiv.appendChild(contentDiv);
+
+	return blockDiv;
 }
