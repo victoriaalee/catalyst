@@ -1,7 +1,24 @@
 <html>
-	<p>HTML says hello!</p>
 	<script src="helloworld.js"></script>
 	<script>
-		sayHello();
+		document.write("hello! ");
+		var protocol = "http";
+		var base = "fhir2.healthintersections.com.au/open";
+		var search = "Patient?name=john&_format=xml";
+		var url = protocol+"://"+base+"/"+search;
+		document.write("URL: "+url);
+		var doc = getREST(url);
+		document.write(" end!");
+		var patients = doc.getElementsByTagName("Patient");
+		var nameNode;
+		var given;
+		var family;
+		for(i = 0; i < patients.length; i++)
+		{
+			nameNode = patients[i].getElementsByTagName("name")[0];
+			given = nameNode.getElementsByTagName("given")[0].getAttribute("value");
+			family = nameNode.getElementsByTagName("family")[0].getAttribute("value");
+			document.write(given +" " + family + ", ");
+		}
 	</script>
 </html>
