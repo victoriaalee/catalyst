@@ -14,12 +14,12 @@
 */
 
 //Returns a div block to add to the timeline
-function generateBlock(titleString,contentString,dateString,imageSrc)
+function generateBlock(titleString,contentString,dateString)
 {
 	titleString = titleString==undefined?"":titleString;
 	contentString = contentString==undefined?"":contentString;
 	dateString = dateString==undefined?"":dateString;
-	imageSrc = imageSrc==undefined?"":imageSrc;
+	//imageSrc = imageSrc==undefined?"":imageSrc;
 	
 	var blockDiv = document.createElement("div");
 	var imgDiv = document.createElement("div");
@@ -32,8 +32,8 @@ function generateBlock(titleString,contentString,dateString,imageSrc)
 	blockDiv.className = "cd-timeline-block";
 	imgDiv.className = "cd-timeline-img cd-picture";
 	contentDiv.className = "cd-timeline-content";
-	img.src = imageSrc;
-	img.alt = "Picture";
+	//img.src = imageSrc;
+	//img.alt = "";
 	date.className = "cd-date";
 	title.innerHTML = titleString;
 	content.innerHTML = contentString;

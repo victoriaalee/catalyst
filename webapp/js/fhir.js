@@ -92,3 +92,71 @@ function searchResourcePatient(url,resource,patient)
 {
 	return searchResourcePatientID(url,resource,patient.id);
 }
+
+
+//Will generate a content string of words
+//<></>   delimits the resourcetype
+//<!></!> delimits important
+//<#></#> delimits ID
+//<@></@> delimits less important
+//<%> - </%> delimits time or time range
+
+function generateContent(jason)
+{
+	var type = jason.resourceType;
+	var output = "";
+	switch(type)
+	{
+	case "Observation":
+		var title = obs[i].code.coding[0].display;
+		var content = obs[i].comments;
+		var date = obs[i].effectiveDateTime;
+		output += concat(inType("Observation"));
+		output += concat(inEmphasis(title));
+		output += concat(inNormal(content));
+		output += concat(inTime(getDate(date)));
+		break;
+	case "Encounter":
+		var loc = retrieveReference(url,jason.location[0].location.reference);
+		var title = loc.name;
+		var content = jason.class;
+		if(jason.period == undefined)
+		{
+			var date = "";
+		}
+		else
+		{
+			var start = getDate(jason.period.start);
+			var end = getDate(jason.period.end);
+			var date = start + " - " + end;
+		}
+		output += concat(inType("Encounter"));
+		output += concat(inEmphasis(title));
+		output += concat(inNormal(content));
+		output += concat(inTime(date));
+		break;
+	}
+	return output;
+}
+
+function concat(input)
+{
+	if(input == undefined)
+		return "";
+	return input;
+}
+
+function getDate(input)
+{
+	if(input == undefined || input == null)
+		return "";
+	var inputEnd = input.indexOf("T");
+	var inputOut = input.substring(0,inputEnd);
+	return inputOut;
+}
+
+function inType(input) { return ("<T>" + input + "</T>");}
+function inEmphasis(input) { return ("<e>" + input + "</e>");}
+function inID(input) { return ("<i>" + input + "</i>");}
+function inNormal(input) { return ("<n>" + input + "</n>");}
+function inTime(input) { return ("<t>" + input + "</t>");}

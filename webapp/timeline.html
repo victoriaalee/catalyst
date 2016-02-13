@@ -15,30 +15,24 @@
 <body>
 	<header>
 		<h1 id="headline">Responsive Vertical Timeline</h1>
-<<<<<<< HEAD
 
 
 	</header>
-=======
 	
 	</header>
 	</header>
 	<section>
->>>>>>> origin/master
 		<ul>
 			<li class="nav"><a href="#timeline">Timeline</a></li>
 			<li class="nav"><a href="#background">Background</a></li>
 			<li class="nav"><a href="#data">Data</a></li>
 		</ul>
 	<a name="timeline"/>
-<<<<<<< HEAD
 
 	
-=======
 	</section>
 	
 
->>>>>>> origin/master
 	<section id="cd-timeline" class="cd-container">
 
 		
@@ -65,43 +59,32 @@
 	changeHeader(patientName);
 	for(i = 0; i < obs.length; i++)
 	{
-		var title = obs[i].code.coding[0].display;
-		var content = obs[i].comments;
-		var date = obs[i].effectiveDateTime;
-		var img = "vertical-timeline/img/cd-icon-picture.svg";
-		var block = generateBlock(title,content,date,img);
+		var block = blockGen(generateContent(obs[i]));
 		timeline.appendChild(block);
 	}
 
 	var enc = searchResourcePatient(url, "Encounter", patient);
 	for(i = 0; i < enc.length; i++)
 	{
-		var loc = retrieveReference(url,enc[i].location[0].location.reference);
-		var title = loc.name;
-		var content = enc[i].class;
-		if(enc[i].period == undefined)
-		{
-			date = "";
-		}
-		else
-		{
-			var startRaw = enc[i].period.start;
-			var endRaw = enc[i].period.end;
-			var startEnd= startRaw.indexOf("T");
-			var endEnd= endRaw.indexOf("T");
-			var start = startRaw.substring(0,startEnd);
-			var end = endRaw.substring(0,endEnd);
-			var date = start + " - " + end;
-		}
-		
-		var img = "vertical-timeline/img/cd-icon-movie.svg";
-		var block = generateBlock(title,content,date,img);
+		var block = blockGen(generateContent(enc[i]));
 		timeline.appendChild(block);
 	}
 
 	function changeHeader(newTitle)
 	{
 		document.getElementById("headline").innerHTML = newTitle;
+	}
+
+	//Generates a block based on the content strings
+	function blockGen(contentStr)
+	{
+		var titleArray = contentStr.match("<e>(.+?)<\/e>");
+		var contentArray = contentStr.match("<n>(.+?)<\/n>");
+		var dateArray = contentStr.match("<t>(.+?)<\/t>");
+		var title = titleArray!=null?titleArray[0]:"";
+		var content = contentArray!=null?contentArray[0]:"";
+		var date = dateArray!=null?dateArray[0]:"";
+		return generateBlock(title,content,date);
 	}
 </script>
 </body>
