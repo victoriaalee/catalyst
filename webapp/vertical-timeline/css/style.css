@@ -69,11 +69,13 @@ li a:hover{
   padding: 14px 16px;
   background: #d9e0e5;
   color: #000;
+  font-weight: bold;
   text-align: center;
 }
 /*Keybord input*/
 .data_input{
   font:20px;
+  display: inline;
 }
 /*Background stuff*/
 .background_text{

@@ -33,7 +33,13 @@
 	<div class="fillerbox"></div>
 	<div class="section_header">Timeline</div>
 		<p class="data_input">Keyword:</p>
-	<input class="data_input" type="text" name="keyword">
+		<input class="data_input" type="text" name="keyword" id="input2">
+		<button class="data_input" onclick="timelineInput()">Submit</button>
+		<script type="text/javascript">
+ function timelineInput(){
+    var text=document.getElementById('input1').value;
+ }
+</script>
 	<section id="cd-timeline" class="cd-container">
 
 		
@@ -97,8 +103,13 @@ the background related to her fall and her medical history to another group of p
 	<div class="fillerbox"></div>
 	<div class="section_header">Patient Data</div>
 		<p class="data_input">Keyword:</p>
-	<input class="data_input" type="text" name="keyword">
-	
+	<input class="data_input" type="text" name="keyword" id="input2">
+	<button class="data_input" onclick="dataInput()">Submit</button>
+	<script type="text/javascript">
+ function dataInput(){
+    var text=document.getElementById('input2').value;
+ }
+</script>
 	<div class="fillerbox"></div>
 	<!-- cd-timeline -->
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
