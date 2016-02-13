@@ -1,0 +1,15 @@
+<html>
+
+<script src="js/fhir.js"></script>
+<script>
+    var url = "http://fhir2.healthintersections.com.au/open";
+    var patient = searchPatientID(url, "example");
+    document.write(patient.text.div)
+    var obs = searchObservationsPatientID(url, "example");
+    for(i = 0; i < obs.length; i++)
+    {
+        document.write(obs[i].text.div);
+    }
+</script>
+
+</html>
