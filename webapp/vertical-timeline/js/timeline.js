@@ -17,5 +17,5 @@ function generateBlock(container,imageUrl,titleString,contentString,readMoreStri
 {
 	var blockDiv = document.create("div");
 	var title = document.create("h2");
-	var content = document.create("p")
+	var content = document.create("p");
 }
