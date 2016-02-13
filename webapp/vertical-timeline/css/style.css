@@ -42,7 +42,7 @@ ul{
   background: #222;
   color:#fff;
   position: fixed;
-  height: 5%;
+  height: 50px;
   top:0;
   vertical-align: middle;
   z-index: 100;
@@ -58,6 +58,32 @@ li a{
 }
 li a:hover{
   background:#555;
+}
+.fillerbox{
+  height:150px;
+}
+/* headers for stuff*/
+.section_header {
+  width: 100%;
+  height:50px;
+  padding: 14px 16px;
+  background: #d9e0e5;
+  color: #000;
+  text-align: center;
+}
+/*Keybord input*/
+.data_input{
+  font:20px;
+}
+/*Background stuff*/
+.background_text{
+  font:10px;
+  text-align: center;
+  padding: 14px 16px;
+  margin: 14px 16px;
+  border-radius: 20px;
+  background: #fff;
+  color: #000;
 }
 /* -------------------------------- 
 
@@ -83,13 +109,13 @@ Main components
 
 -------------------------------- */
 header {
-  height: 10%;
+  height: 100px;
   width: 100%;
   line-height: 100px;
   text-align: center;
   background: #303e49;
   z-index: 49;
-  top:5%;
+  top:50px;
   position: fixed;
 }
 header h1 {
@@ -98,7 +124,7 @@ header h1 {
 }
 @media only screen and (min-width: 1170px) {
   header {
-    height: 10%;
+    height: 100px;
   }
   header h1 {
     font-size: 24px;
