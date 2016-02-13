@@ -83,26 +83,25 @@ Main components
 
 -------------------------------- */
 header {
-  height: 100px;
+  height: 10%;
   width: 100%;
-  line-height: 200px;
+  line-height: 100px;
   text-align: center;
   background: #303e49;
   z-index: 49;
+  top:5%;
+  position: fixed;
 }
 header h1 {
   color: white;
   font-size: 18px;
-  font-size: 1.125rem;
 }
 @media only screen and (min-width: 1170px) {
   header {
-    height: 300px;
-    line-height: 300px;
+    height: 10%;
   }
   header h1 {
     font-size: 24px;
-    font-size: 1.5rem;
   }
 }
 
