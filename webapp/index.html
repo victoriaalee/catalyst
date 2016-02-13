@@ -1,5 +1,6 @@
 <!doctype html>
-<html lang="en" class="no-js">
+<!--<html lang="en" class="no-js">-->
+<html>
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -97,5 +98,13 @@
 	</section> <!-- cd-timeline -->
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <script src="js/main.js"></script> <!-- Resource jQuery -->
+<script src="js/fhir.js"></script> 
+<script>
+	var url = "http://fhir2.healthintersections.com.au/open";
+    var patient = searchPatientID(url, "example");
+    var name = patient.name[0].given + " " + patient.name[0].family;
+	document.getElementsByTagName("head")[0].getElementsByTagName("title")[0].innerHTML = name;
+	document.getElementsByTagName("body")[0].getElementsByTagName("header")[0].getElementsByTagName("h1")[0].innerHTML = name;
+</script>
 </body>
 </html>
