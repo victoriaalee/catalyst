@@ -50,3 +50,8 @@ function searchObservationsPatientID(url,patientID)
     }
     return null
 }
+//Same as above, but using patient resource JSON object
+function searchObservationsPatient(url,patient)
+{
+	return searchObservationsPatientID(url,patient.id)
+}

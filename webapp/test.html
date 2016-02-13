@@ -1,15 +1,43 @@
 <html>
 
+<div id="prompt">
+	<p>Server URL: <input type="text" id="url_input"><br></p>
+	<input type="button" onclick="changeURL()" value="Change URL">
+	<p>Patient ID: <input type="text" id="patientID_input"><br></p>
+	<input type="button" onclick="findPatient()" value="Find Patient">
+</div>
+<div id="content_pane">
+
+</div>
+
 <script src="js/fhir.js"></script>
+<script src="js/util.js"></script>
 <script>
-    var url = "http://fhir2.healthintersections.com.au/open";
-    var patient = searchPatientID(url, "example");
-    document.write(patient.text.div)
-    var obs = searchObservationsPatientID(url, "example");
-    for(i = 0; i < obs.length; i++)
-    {
-        document.write(obs[i].text.div);
-    }
+	var url;
+	cookie = document.cookie;
+	if(getCookie("url") == "")
+	{
+		url = "http://fhir2.healthintersections.com.au/open";
+		document.getElementById("url_input").value = url;
+		changeURL();
+	}
+
+	function findPatient()
+	{
+		var patientID = document.getElementById("patientID_input").value;
+		var patient = searchPatientID(url, patientID);
+		document.getElementById("content_pane").innerHTML+=(patient.text.div);
+		var obs = searchObservationsPatient(url, patient);
+		for(i = 0; i < obs.length; i++)
+		{
+			document.getElementById("content_pane").innerHTML +=(obs[i].text.div);
+		}
+	}
+	function changeURL()
+	{
+		url = document.getElementById("url_input").value;
+		setCookie("url",url);
+	}
 </script>
 
 </html>
