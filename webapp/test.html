@@ -27,7 +27,7 @@
 		var patientID = document.getElementById("patientID_input").value;
 		var patient = searchPatientID(url, patientID);
 		document.getElementById("content_pane").innerHTML+=(patient.text.div);
-		var obs = searchObservationsPatient(url, patient);
+		var obs = searchResourcePatient(url, "Observation", patient);
 		for(i = 0; i < obs.length; i++)
 		{
 			document.getElementById("content_pane").innerHTML +=(obs[i].text.div);
