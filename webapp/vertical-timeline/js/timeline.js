@@ -16,6 +16,11 @@
 //Returns a div block to add to the timeline
 function generateBlock(titleString,contentString,dateString,imageSrc)
 {
+	titleString = titleString==undefined?"":titleString;
+	contentString = contentString==undefined?"":contentString;
+	dateString = dateString==undefined?"":dateString;
+	imageSrc = imageSrc==undefined?"":imageSrc;
+	
 	var blockDiv = document.createElement("div");
 	var imgDiv = document.createElement("div");
 	var contentDiv = document.createElement("div");

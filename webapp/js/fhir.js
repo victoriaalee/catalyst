@@ -2,56 +2,93 @@
  * This javascript file will handle the use of FHIR requests
  */
 
-//Returns an XML document for the url
+function get(url)
+{
+	var req = new XMLHttpRequest();
+	req.open("GET", url, false);
+	req.send();
+	if(req.readyState == 4 && req.status == "200")
+	{
+		var string = req.responseText;
+		var jason= JSON.parse(string);
+		return jason;
+	}
+	else
+	{
+		alert("Not found!");
+	}
+}
+//Returns an JSON document for the url
 function getJSON(url)
 {
-    url += "&_format=json";
-    var req = new XMLHttpRequest();
-    req.open("GET", url, false);
-    req.send();
-    if(req.readyState == 4 && req.status == "200")
-    {
-        var string = req.responseText;
-        var jason= JSON.parse(string);
-        return jason;
-    }
-    else
-    {
-        alert("Not found!");
-    }
+	url += "&_format=json";
+	var req = new XMLHttpRequest();
+	req.open("GET", url, false);
+	req.send();
+	if(req.readyState == 4 && req.status == "200")
+	{
+		var string = req.responseText;
+		var jason= JSON.parse(string);
+		return jason;
+	}
+	else
+	{
+		alert("Not found!");
+	}
 };
 
 //Finds patient via ID 
 //Returns patient resource JSON object
 function searchPatientID(url,patientID)
 {
-    var entry = getJSON(url+"/Patient/_search?_id="+patientID).entry;
-    if(entry != null)
-    {
-        if(entry[0] != null)
-            return entry[0].resource;
-    }
-    return null
+	var entry = getJSON(url+"/Patient/_search?_id="+patientID).entry;
+	if(entry != null)
+	{
+		if(entry[0] != null)
+			return entry[0].resource;
+	}
+	return null
 };
 
-//Finds all observations for patient via ID
-//Returns array of observations
-function searchObservationsPatientID(url,patientID)
+function retrieveReference(url,reference)
 {
-    var entry = getJSON(url+"/Observation/_search?patient="+patientID).entry;
-    var output = [];
-    if(entry != null)
-    {
-        for(i = 0; i < entry.length; i++)
-        {
-            output.push(entry[i].resource);
-        }
-        return output;
-    }
-    return null
+	var resource = get(url+"/" + reference + "?_format=json");
+	if(resource != null)
+	{
+		return resource;
+	}
+	return null
 }
-//Same as above, but using patient resource JSON object
-function searchObservationsPatient(url,patient)
+
+//Generic search
+function retrieveResource(url,resource,id)
 {
-	return searchObservationsPatientID(url,patient.id)
+	var resource = getJSON(url+"/" + resource + "/"+id);
+	if(resource != null)
+	{
+		return resource;
+	}
+	return null
+}
+
+//Finds based on resource and patientID
+function searchResourcePatientID(url,resource,patientID)
+{
+	var entry = getJSON(url+"/" + resource + "/_search?patient="+patientID).entry;
+	var output = [];
+	if(entry != null)
+	{
+		for(i = 0; i < entry.length; i++)
+		{
+			output.push(entry[i].resource);
+		}
+		return output;
+	}
+	return null;
+}
+
+//Same as above, but using patient resource JSON object
+function searchResourcePatient(url,resource,patient)
+{
+	return searchResourcePatientID(url,resource,patient.id);
 }
