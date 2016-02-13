@@ -34,14 +34,23 @@
 <script src="js/fhir.js"></script>
 <script src="vertical-timeline/js/timeline.js"></script>
 <script>
+	var url = "http://fhir2.healthintersections.com.au/open";
+	//var patientID = "ad2f3d7c-4274-4422-a10a-8e2bc99c40";
+	var patientID = "example";
+	
 	var timeline = document.getElementById("cd-timeline");
-
-	var patient = searchPatientID(url, example);
-	var patientName = patient
-
+	var patient = searchPatientID(url, patientID);
 	var obs = searchObservationsPatient(url, patient);
+	var patientName = patient.name[0].given[0] + " " + patient.name[0].family[0];
+	changeHeader(patientName);
 	for(i = 0; i < obs.length; i++)
 	{
+		var title = obs[i].code.coding[0].display;
+		var content = obs[i].comments;
+		var date = obs[i].effectiveDateTime;
+		var img = "vertical-timeline/img/cd-icon-picture.svg";
+		var block = generateBlock(title,content,date,img);
+		timeline.appendChild(block);
 	}
 
 	function changeHeader(newTitle)
