@@ -103,7 +103,7 @@
 	
 	<div class="tab">
 		<input type="radio" id="tab-2" name="tab-group-1">
-		<label for="tab-2">Chronic Illnesses</label>
+		<label for="tab-2">Medication</label>
 	
 		<div id="tab2-content" class="content">
 		</div> 
@@ -154,14 +154,6 @@
 		<label for="tab-8">Resolved Conditions</label>
 		
 		<div id="tab8-content" class="content">
-		</div> 
-	</div>
-
-	<div class="tab">
-		<input type="radio" id="tab-9" name="tab-group-1" checked>
-		<label for="tab-9">Medication</label>
-		
-		<div id="tab9-content" class="content">
 		</div> 
 	</div>
 </div>
@@ -248,7 +240,6 @@
 				con = res; 
 				conCon = generateContents(con);
 				conDone = true; 
-				setChildrenString(filterContent(conCon,"chronic"),document.getElementById("tab2-content"));
 				setChildrenString(filterContent(conCon,"active"),document.getElementById("tab7-content"));
 				setChildrenString(filterContent(conCon,"resolve"),document.getElementById("tab8-content"));
 			}
@@ -258,7 +249,7 @@
 				med = res; 
 				medCon = generateContents(med);
 				medDone = true; 
-				setChildrenString(medCon,document.getElementById("tab9-content"));
+				setChildrenString(medCon,document.getElementById("tab2-content"));
 			}
 		);
 	}
