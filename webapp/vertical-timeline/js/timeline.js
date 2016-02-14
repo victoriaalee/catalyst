@@ -37,6 +37,8 @@ function generateBlock(titleString,contentString,dateString)
 	date.className = "cd-date";
 	title.innerHTML = titleString;
 	content.innerHTML = contentString;
+	//title.innerHTML = (titleString.charAt(0).toUpperCase() + titleString.substring(1));
+	//content.innerHTML = (contentString.charAt(0).toUpperCase() + contentString.substring(1));
 	date.innerHTML = dateString;
 
 	imgDiv.appendChild(img);
