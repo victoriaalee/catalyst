@@ -160,11 +160,32 @@ function generateContent(jason)
 	}
 	var type = jason.resourceType;
 	var output = inType(jason.ResourceType);
+	output += inID(jason.id);
 	switch(type)
 	{
 	case "Observation":
 		var title = jason.code.coding[0].display;
-		var content = jason.text.div;
+		var content = "";
+		if(jason.valueQuantity != undefined)
+		{
+			content += jason.valueQuantity.value + " " + jason.valueQuantity.unit;
+		}
+		if(jason.component != undefined)
+		{
+			for(var i = 0; i < jason.component.length; i++)
+			{
+				content += ("<br/>" + jason.component[i].code.coding[0].display + ":");
+				content += ("<br/>" + jason.component[i].valueQuantity.value + " " + jason.component[i].valueQuantity.unit);
+				content += "<br/>"
+			}
+		}
+		if(jason.valueCodeableConcept != undefined)
+		{
+			for(var i = 0; i < jason.valueCodeableConcept.coding.length; i++)
+			{
+				content += ("<br/>" + jason.valueCodeableConcept.coding[i].display);
+			}
+		}
 		var date = jason.effectiveDateTime;
 		output += concat(inEmphasis(title));
 		output += concat(inNormal(content));
@@ -172,8 +193,12 @@ function generateContent(jason)
 		break;
 	case "Encounter":
 		var loc = retrieveReference(url,jason.location[0].location.reference);
+		var prac = retrieveReference(url,jason.participant[0].individual.reference);
+		var org = retrieveReference(url,jason.serviceProvider.reference);
 		var title = loc.name;
-		var content = jason.class;
+		var content = "";
+		content += (prac.name.given[0] + " " + prac.name.family[0] + ((prac.name.suffix!=undefined)?", " + prac.name.suffix[0]:""));
+		content += ("<br>" + org.name + ", " + jason.class);
 		if(jason.period == undefined)
 		{
 			var date = "";
@@ -182,7 +207,7 @@ function generateContent(jason)
 		{
 			var start = getDate(jason.period.start);
 			var end = getDate(jason.period.end);
-			var date = start + " - " + end;
+			var date = start + " ~ " + end;
 		}
 		output += concat(inEmphasis(title));
 		output += concat(inNormal(content));
@@ -194,10 +219,19 @@ function generateContent(jason)
 		break;
 	case "Condition":
 		if(jason.code.coding != undefined)
-			output += concat(inEmphasis( jason.code.coding[0].display + ": " + jason.severity.coding[0].display));
+		{
+			output += concat(inEmphasis( jason.clinicalStatus + ": " +jason.code.coding[0].display));
+			//Get the practitioner
+			var prac = retrieveReference(url,jason.asserter.reference);
+			var string = jason.severity.coding[0].display;
+			string += ("<br>" + prac.name.given[0] + " " + prac.name.family[0] + ((prac.name.suffix!=undefined)?", " + prac.name.suffix[0]:""));
+			output += concat(inNormal(string));
+		}
 		else
+		{
 			output += concat(inEmphasis(jason.code.txt));
-		output += concat(inNormal(jason.text.div));
+			output += concat(inNormal(jason.text.div));
+		}
 		break;
 	}
 	return output;

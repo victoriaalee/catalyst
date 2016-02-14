@@ -24,9 +24,6 @@
 			<li class="nav"><a href="#background">Background</a></li>
 			<li class="nav"><a href="#data">Data</a></li>
 		</ul>
-	<a name="timeline"/>
-
-	
 	</section>
 
 	<a name="timeline"/>
@@ -84,48 +81,50 @@ Hit head on concrete floor, small pool of blood leaking. Had emergency craniotom
 <script src="js/fhir.js"></script>
 <script src="vertical-timeline/js/timeline.js"></script>
 <script>
-	var filter = "";
-	var url = "http://fhir2.healthintersections.com.au/open";
-
-	var patientID = "ad2f3d7c-4274-4422-a10a-8e2bc99c40";
-	//var patientID = "example";
-	
 	var timeline = document.getElementById("cd-timeline");
 	var data = document.getElementById("data");
+	var url = "http://fhir2.healthintersections.com.au/open";
+	var patientIDNum = "ad2f3d7c-4274-4422-a10a-8e2bc99c40";
 
-	var patient = searchPatientID(url, patientID);
-	var patientName = patient.name[0].given[0] + " " + patient.name[0].family[0];
-	changeHeader(patientName);
-
-	var obs = searchResourcePatient(url, "Observation", patient);
-	var enc = searchResourcePatient(url, "Encounter", patient);
-	var aly= searchResourcePatient(url, "AllergyIntolerance", patient);
-	var con = searchResourcePatient(url, "Condition", patient);
-
-	var events = con.concat(aly.concat((enc.concat(obs))));
-
-	//Handle placement
-	var timelineEvents = [];
-	var timelineContent = [];
-	var dataEvents = [];
-	var dataContent = [];
-	for(i = 0; i < events.length; i++)
+	setPatient(patientIDNum);
+	/////
+	function setPatient(patientID)
 	{
-		var content = generateContent(events[i]);
-		if(fromTime(content) != null)
-		{
-			timelineEvents.push(events[i]);
-			timelineContent.push(content);
-		}
-		else
-		{
-			dataEvents.push(events[i]);
-			dataContent.push(content);
-		}
-	}
-	setTimeline(timelineEvents);
-	setData(dataEvents);
+		changeHeader("Loading Patient "+patientID+"...");
 
+		var patient = searchPatientID(url, patientID);
+		var patientName = patient.name[0].given[0] + " " + patient.name[0].family[0];
+		changeHeader(patientName);
+
+		var obs = searchResourcePatient(url, "Observation", patient);
+		var enc = searchResourcePatient(url, "Encounter", patient);
+		var aly= searchResourcePatient(url, "AllergyIntolerance", patient);
+		var con = searchResourcePatient(url, "Condition", patient);
+
+		var events = con.concat(aly.concat((enc.concat(obs))));
+
+		//Handle placement
+		var timelineEvents = [];
+		var timelineContent = [];
+		var dataEvents = [];
+		var dataContent = [];
+		for(i = 0; i < events.length; i++)
+		{
+			var content = generateContent(events[i]);
+			if(fromTime(content) != null)
+			{
+				timelineEvents.push(events[i]);
+				timelineContent.push(content);
+			}
+			else
+			{
+				dataEvents.push(events[i]);
+				dataContent.push(content);
+			}
+		}
+		setTimeline(timelineEvents);
+		setData(dataEvents);
+	}
 	
 
 	//////
