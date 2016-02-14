@@ -79,12 +79,14 @@
 	<a name="data"/>
 	<div class="fillerbox"></div>
 	<div class="section_header">Patient Data</div>
-	<div class="myBox"a
+	<div class="myBox">
+	<!--
 	<div class="input_box">
 		<p class="data_input">Keyword:</p>
 	<input class="data_input" type="text" name="keyword" id="input2">
 	<button class="data_input" onclick="dataInput()">Submit</button>
-	
+	</div>
+	-->
 	<div class="tabs">
 	
 	<div class="tab">
@@ -113,6 +115,14 @@
 		<div id="tab3-content" class="content">
 		</div> 
 	</div>
+	<!--
+	<div class="tab">
+		<input type="radio" id="tab-4" name="tab-group-1" checked>
+		<label for="tab-4">Vitals</label>
+		<div id="tab4-content" class="content">
+		</div> 
+	</div>
+	-->
 	<!--
 	<div class="tab">
 		<input type="radio" id="tab-3" name="tab-group-1">
@@ -199,6 +209,7 @@
 				obsCon = generateContents(obs);
 				obsDone = true;
 				setChildrenString(obsCon,document.getElementById("tab3-content"));
+				setChildrenString(filterContent(obsCon,"blood, pressure",document.getElementById("tab4-content")));
 			}
 		);
 		searchResourcePatientAsync(url,"Encounter",patient,
