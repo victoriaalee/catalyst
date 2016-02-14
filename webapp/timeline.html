@@ -78,7 +78,7 @@
 
 	<a name="data"/>
 	<div class="fillerbox"></div>
-	<div class="section_header">Patient Data</div>
+	<div id ="pdata" class="section_header">Patient Data</div>
 	<div class="myBox">
 	<!--
 	<div class="input_box">
@@ -179,6 +179,7 @@
 	var url = "http://fhir2.healthintersections.com.au/open";
 	//var patientIDNum = "ad2f3d7c-4274-4422-a10a-8e2bc99c40";
 	var patientIDNum = "ad2f3d7c-4274-4422-a10a-8e2bc99c40";
+	var patientInfo= "ad2f3d7c-4274-4422-a10a-8e2bc99c40";
 	timelineContent = [];
 	dataContent = [];
 
@@ -194,7 +195,8 @@
 			{
 				patient = pat;
 				patientName = patient.name[0].given[0] + " " + patient.name[0].family[0];
-				changeHeader("Loading Patient: " + patientName);
+				patientInfo = patient.birthDate + ", " + patient.gender;
+				changeHeader("Loading Patient: " + patientName + " (" + patientInfo + ")");
 				loadEvents(patient);
 			}
 		)
@@ -230,7 +232,7 @@
 				encDone = true; 
 				timelineContent = encCon;
 				setTimelineString(encCon);
-				changeHeader(patientName);
+				changeHeader(patientName + " (" + patientInfo + ")");
 			}
 		);
 		searchResourcePatientAsync(url,"AllergyIntolerance",patient,
