@@ -336,6 +336,7 @@ header h1 {
 .cd-timeline-content p, .cd-timeline-content .cd-read-more, .cd-timeline-content .cd-date {
   font-size: 13px;
   font-size: 0.8125rem;
+  color: #000;
 }
 .cd-timeline-content .cd-read-more, .cd-timeline-content .cd-date {
   display: inline-block;
@@ -343,12 +344,13 @@ header h1 {
 .cd-timeline-content p {
   margin: 1em 0;
   line-height: 1.6;
+  color: #000;
 }
 .cd-timeline-content .cd-read-more {
   float: right;
   padding: .8em 1em;
   background: #acb7c0;
-  color: white;
+  color: black;
   border-radius: 0.25em;
 }
 .no-touch .cd-timeline-content .cd-read-more:hover {
