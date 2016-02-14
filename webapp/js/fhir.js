@@ -37,18 +37,53 @@ function getJSON(url)
 	}
 };
 
-//Finds patient via ID 
-//Returns patient resource JSON object
-function searchPatientID(url,patientID)
+//An asynchronous json get, provide a handler that takes in a json object
+function getAsyncJSON(url, handle)
 {
-	var entry = getJSON(url+"/Patient/_search?_id="+patientID).entry;
+	url += "&_format=json";
+	var req = new XMLHttpRequest();
+	req.open("GET", url, true);
+	req.onreadystatechange = function()
+	{
+		if(req.readyState == 4 && req.status == "200")
+		{
+			var string = req.responseText;
+			var jason= JSON.parse(string);
+			handle(jason);
+		}
+		else
+		{
+			alert("Not found!");
+		}
+	}
+}
+
+//Extracts first patient from the json
+function extractPatient(json)
+{
+	var entry = json.entry;
 	if(entry != null)
 	{
 		if(entry[0] != null)
 			return entry[0].resource;
 	}
 	return null
+}
+//Finds patient via ID 
+//Returns patient resource JSON object
+function searchPatientID(url,patientID)
+{
+	return extractPatient(getJSON(url+"/Patient/_search?_id="+patientID));
 };
+//Asynchronous: handler(patient)
+function searchPatientID(url,patientID,handler)
+{
+	getAsyncJSON(url+"/Patient/_search?_id"+patientID,
+		function(json){
+			handler(extractPatient(json));
+		}
+	);
+}
 
 function retrieveReference(url,reference)
 {
@@ -58,7 +93,7 @@ function retrieveReference(url,reference)
 		return resource;
 	}
 	return null
-}
+};
 
 //Generic search
 function retrieveResource(url,resource,id)
@@ -71,10 +106,9 @@ function retrieveResource(url,resource,id)
 	return null
 }
 
-//Finds based on resource and patientID
-function searchResourcePatientID(url,resource,patientID)
+function extractResource(json)
 {
-	var entry = getJSON(url+"/" + resource + "/_search?patient="+patientID).entry;
+	var entry = json.entry;
 	var output = [];
 	if(entry != null)
 	{
@@ -85,6 +119,11 @@ function searchResourcePatientID(url,resource,patientID)
 		return output;
 	}
 	return null;
+}
+//Finds based on resource and patientID
+function searchResourcePatientID(url,resource,patientID)
+{
+	return extractResource(getJSON(url+"/" + resource + "/_search?patient="+patientID));
 }
 
 //Same as above, but using patient resource JSON object

@@ -65,7 +65,7 @@
 		<button class="data_input" onclick="timelineInput()">Submit</button>
 		<script type="text/javascript">
  function timelineInput(){
-    var text=document.getElementById('input1').value;
+	var text=document.getElementById('input1').value;
  }
 </script>
 </div>
@@ -86,55 +86,55 @@
 	<button class="data_input" onclick="dataInput()">Submit</button>
 	
 	<div class="tabs">
-    
-   <div class="tab">
-       <input type="radio" id="tab-1" name="tab-group-1" checked>
-       <label for="tab-1">Allergies</label>
-       
-       <div id="tab1-content" class="content">
-       </div> 
-   </div>
-    
-   <div class="tab">
-       <input type="radio" id="tab-2" name="tab-group-1">
-       <label for="tab-2">Chronic Illnesses</label>
-       
-       <div id="tab2-content" class="content">
-       </div> 
-   </div>
-    
-    <div class="tab">
-       <input type="radio" id="tab-3" name="tab-group-1">
-       <label for="tab-3">Family History</label>
-     
-       <div id="tab3-content" class="content">
-       </div> 
-   </div>
+	
+	<div class="tab">
+		<input type="radio" id="tab-1" name="tab-group-1" checked>
+		<label for="tab-1">Allergies</label>
+	   
+		<div id="tab1-content" class="content">
+		</div> 
+	</div>
+	
+	<div class="tab">
+		<input type="radio" id="tab-2" name="tab-group-1">
+		<label for="tab-2">Chronic Illnesses</label>
+	
+		<div id="tab2-content" class="content">
+		</div> 
+	</div>
+	
+	 <div class="tab">
+		<input type="radio" id="tab-3" name="tab-group-1">
+		<label for="tab-3">Family History</label>
+	 
+		<div id="tab3-content" class="content">
+		</div> 
+	</div>
 
-   <div class="tab">
-       <input type="radio" id="tab-4" name="tab-group-1" checked>
-       <label for="tab-4">Imaging</label>
-       
-       <div id="tab4-content" class="content">
-       </div> 
-   </div>
+	<div class="tab">
+		<input type="radio" id="tab-4" name="tab-group-1" checked>
+		<label for="tab-4">Imaging</label>
+	   
+		<div id="tab4-content" class="content">
+		</div> 
+	</div>
 
-   <div class="tab">
-       <input type="radio" id="tab-5" name="tab-group-1" checked>
-       <label for="tab-5">Lifestyle</label>
-       
-       <div id="tab5-content" class="content">
-       </div> 
-   </div>
+	<div class="tab">
+		<input type="radio" id="tab-5" name="tab-group-1" checked>
+		<label for="tab-5">Lifestyle</label>
+		
+		<div id="tab5-content" class="content">
+		</div> 
+	</div>
 
-   <div class="tab">
-       <input type="radio" id="tab-6" name="tab-group-1" checked>
-       <label for="tab-6">Vitals</label>
-       
-       <div id="tab6-content" class="content">
-       </div> 
-   </div>
-    
+	<div class="tab">
+		<input type="radio" id="tab-6" name="tab-group-1" checked>
+		<label for="tab-6">Vitals</label>
+		
+		<div id="tab6-content" class="content">
+		</div> 
+	</div>
+	
 </div>
 	</div>
 </div>
@@ -156,9 +156,17 @@
 	{
 		changeHeader("Loading Patient "+patientID+"...");
 
+		/*
+		var patient;
+		var patientName;
+		getAsyncJSON()
+		*/
+		
+		///*
 		var patient = searchPatientID(url, patientID);
 		var patientName = patient.name[0].given[0] + " " + patient.name[0].family[0];
 		changeHeader(patientName);
+		//*/
 
 		var obs = searchResourcePatient(url, "Observation", patient);
 		var enc = searchResourcePatient(url, "Encounter", patient);
@@ -187,7 +195,8 @@
 				dataContent.push(content);
 			}
 		}
-		setTimeline(timelineEvents);
+		//setTimeline(timelineEvents);
+		setTimeline(events);
 		setData(dataEvents);
 
 		//setChildren(filterContent(events,eventsContent,"allergy"),document.getElementById("tab1-content"));
@@ -255,15 +264,15 @@
 
 	//
 	function timelineInput(){
-    	var filter = document.getElementById('input1').value;
-    	var timeFiltered = filterContent(timelineEvents,timelineContent,filter);
-    	setTimeline(timeFiltered);
- 	}
- 	function dataInput(){
-    	var filter = document.getElementById('input2').value;
-    	var dataFiltered = filterContent(dataEvents,dataContent,filter);
-    	setData(dataFiltered);
- 	}
+		var filter = document.getElementById('input1').value;
+		var timeFiltered = filterContent(timelineEvents,timelineContent,filter);
+		setTimeline(timeFiltered);
+	}
+	function dataInput(){
+		var filter = document.getElementById('input2').value;
+		var dataFiltered = filterContent(dataEvents,dataContent,filter);
+		setData(dataFiltered);
+	}
 </script>
 </body>
 </html>
