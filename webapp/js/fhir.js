@@ -13,10 +13,6 @@ function get(url)
 		var jason= JSON.parse(string);
 		return jason;
 	}
-	else
-	{
-		alert("Not found!");
-	}
 }
 //Returns an JSON document for the url
 function getJSON(url)
@@ -30,10 +26,6 @@ function getJSON(url)
 		var string = req.responseText;
 		var jason= JSON.parse(string);
 		return jason;
-	}
-	else
-	{
-		alert("Not found!");
 	}
 };
 
@@ -51,11 +43,8 @@ function getAsyncJSON(url, handle)
 			var jason= JSON.parse(string);
 			handle(jason);
 		}
-		else
-		{
-			alert("Not found!");
-		}
 	}
+	req.send();
 }
 
 //Extracts first patient from the json
@@ -78,7 +67,7 @@ function searchPatientID(url,patientID)
 //Asynchronous: handler(patient)
 function searchPatientIDAsync(url,patientID,handler)
 {
-	getAsyncJSON(url+"/Patient/_search?_id"+patientID,
+	getAsyncJSON(url+"/Patient/_search?_id="+patientID,
 		function(json){
 			handler(extractPatient(json));
 		}
@@ -125,11 +114,25 @@ function searchResourcePatientID(url,resource,patientID)
 {
 	return extractResource(getJSON(url+"/" + resource + "/_search?patient="+patientID));
 }
+function searchResourcePatientIDAsync(url,resource,patientID,handler)
+{
+	getAsyncJSON(url+"/"+resource+"/_search?patient="+patientID,
+		function(json)
+		{
+			handler(extractResource(json));
+		}
+	)
+}
 
 //Same as above, but using patient resource JSON object
 function searchResourcePatient(url,resource,patient)
 {
 	return searchResourcePatientID(url,resource,patient.id);
+}
+
+function searchResourcePatientAsync(url,resource,patient,handle)
+{
+	return searchResourcePatientIDAsync(url,resource,patient.id,handle);
 }
 
 function filterContent(jsonData,content,query) {
@@ -190,7 +193,6 @@ function containsWord(jsonData,content,query,results) {
 //<#></#> delimits ID
 //<@></@> delimits less important
 //<%> - </%> delimits time or time range
-
 function generateContent(jason)
 {
 	if(jason == null || jason == undefined)
@@ -272,6 +274,15 @@ function generateContent(jason)
 			output += concat(inNormal(jason.text.div));
 		}
 		break;
+	}
+	return output;
+}
+function generateContents(jasons)
+{
+	var output = [];
+	for(i = 0; i < jasons.length; i++)
+	{
+		output.push(generateContent(jasons[i]));
 	}
 	return output;
 }
