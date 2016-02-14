@@ -32,6 +32,8 @@
 	<a name="timeline"/>
 	<div class="fillerbox"></div>
 	<div class="section_header">Timeline</div>
+	
+	<div class="myBox">
 	<div class="input_box">
 		<p class="data_input">Keyword:</p>
 		<input class="data_input" type="text" name="keyword" id="input1">
@@ -46,20 +48,23 @@
 
 		
 	</section> 
+	</div>
 	<a name="background"/>
 	<div class="fillerbox"></div>
-	<div class="section_header">Background</div>
+	<div class="section_header" id="one">Background</div>
+	<div class="myBox">
+	<
 	<div class="background_text">
 	<h3>Past Events:</h3>
 	<ul>
 		<li>Hit head on concrete floor</li> 
 		<li>Small pool of blood leaking</li> 
 		<li>Had emergency craniotomy, pressure relieved</li>
-		<li>Could not speak or swallow
-		<li>Transferred to rehab to walk unassisted
+		<li>Could not speak or swallow</li>
+		<li>Transferred to rehab to walk unassisted</li>
 		<li>Restore speech, and swallow sufficiently.</li>
 	</ul>
-	</div><div class="background_text">
+	</div><div class="background_text" id="two">
 	<h3>Current Situations:
 </h3>
 	<ul>
@@ -70,10 +75,12 @@
 		<li>swallowing</li>
 	</ul>
 	</div>
+</div>
 
 	<a name="data"/>
 	<div class="fillerbox"></div>
 	<div class="section_header">Patient Data</div>
+	<div class="myBox">
 	<div class="input_box">
 		<p class="data_input">Keyword:</p>
 	<input class="data_input" type="text" name="keyword" id="input2">
@@ -81,13 +88,13 @@
 	<div name="dataSection">
 
 	</div>
+	</div>
 	<script type="text/javascript">
  function dataInput(){
     var text=document.getElementById('input2').value;
  }
 </script>
 </div>
-	<div class="fillerbox"></div>
 	<!-- cd-timeline -->
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <script src="vertical-timeline/js/main.js"></script> <!-- Resource jQuery -->

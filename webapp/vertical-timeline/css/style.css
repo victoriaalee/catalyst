@@ -19,6 +19,7 @@ body {
   font-family: "Droid Serif", serif;
   color: #000;
   background-color: #bcd;
+  overflow: hidden;
 }
 
 a {
@@ -44,7 +45,7 @@ ul.nav {
   background: #114B5F;
   color:#fff;
   position: fixed;
-  height: 50px;
+  height: 5vh;
   top:0;
   vertical-align: middle;
   z-index: 100;
@@ -63,12 +64,12 @@ li.nav a:hover{
   background:#099;
 }
 .fillerbox{
-  height:150px;
+  height:15vh;
 }
 /* headers for stuff*/
 .section_header {
   width: 100%;
-  height:50px;
+  height:5vh;
   padding: 14px 16px;
   background-color: #099;
   color: #000;
@@ -87,16 +88,25 @@ li.nav a:hover{
 /*Background stuff*/
 .background_text{
   font:10px;
-  text-align: center;
   padding: 14px 16px;
   margin: 14px 16px;
   border-radius: 20px;
   background: #fff;
   color: #114B5F;
   display:inline-block;
-  width: 48%;
+  width: 50%;
   text-align: left;
-  height: 150px;
+  height: 20vh;
+}
+div.background_text h3{
+  font-size: 20px;
+  font-weight: bold;
+}
+#one{
+  float:left;
+}
+#two{
+  margin-left: 50%;
 }
 /* -------------------------------- 
 
@@ -124,11 +134,11 @@ Main components
 header {
   height: 100px;
   width: 100%;
-  line-height: 100px;
+  line-height: 10vh;
   text-align: center;
   background: url(http://clipartion.com/wp-content/uploads/2015/11/cartoon-stethoscope.png) 0 50% no-repeat #08c;
-  background-size: 3.5%;
-  top:50px;
+  background-size: contain;
+  top:5vh;
   position: fixed;
   z-index: 50;
 }
@@ -138,7 +148,7 @@ header h1 {
 }
 @media only screen and (min-width: 1170px) {
   header {
-    height: 100px;
+    height: 10vh;
   }
   header h1 {
     font-size: 24px;
@@ -544,4 +554,29 @@ header h1 {
     -o-transform: translateX(0);
     transform: translateX(0);
   }
+}
+.myBox {
+width: 100%;
+height: 80vh;
+overflow: scroll;
+}
+
+/* Scrollbar styles */
+::-webkit-scrollbar {
+width: 12px;
+height: 12px;
+}
+
+::-webkit-scrollbar-track {
+border: 1px solid yellowgreen;
+border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+background: yellowgreen;  
+border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+background: #88ba1c;  
 }
