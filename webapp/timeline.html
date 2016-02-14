@@ -106,8 +106,15 @@
 		<div id="tab2-content" class="content">
 		</div> 
 	</div>
-	
-	 <div class="tab">
+	<div class="tab">
+		<input type="radio" id="tab-3" name="tab-group-1">
+		<label for="tab-3">Observations</label>
+	 
+		<div id="tab3-content" class="content">
+		</div> 
+	</div>
+	<!--
+	<div class="tab">
 		<input type="radio" id="tab-3" name="tab-group-1">
 		<label for="tab-3">Family History</label>
 	 
@@ -138,6 +145,7 @@
 		<div id="tab6-content" class="content">
 		</div> 
 	</div>
+	-->
 	
 </div>
 	</div>
@@ -190,16 +198,17 @@
 				obs = res;
 				obsCon = generateContents(obs);
 				obsDone = true;
-
+				setChildrenString(obsCon,document.getElementById("tab3-content"));
 			}
 		);
 		searchResourcePatientAsync(url,"Encounter",patient,
 			function(res){
-				enc = res; 
+				enc = res.reverse(); 
 				encCon = generateContents(enc);
 				encDone = true; 
 				timelineContent = encCon;
 				setTimelineString(encCon);
+				changeHeader(patientName);
 			}
 		);
 		searchResourcePatientAsync(url,"AllergyIntolerance",patient,
@@ -219,7 +228,6 @@
 				setChildrenString(conCon,document.getElementById("tab2-content"));
 			}
 		);
-		changeHeader(patientName);
 	}
 	
 
