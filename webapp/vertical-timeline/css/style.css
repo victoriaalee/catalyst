@@ -54,10 +54,11 @@ li.nav {
   float:left;
 }
 li.nav a{
+  font-size: 2vh;
   display: block;
   color: #fff;
   text-align: center;
-  padding: 14px 16px;
+  padding: 1vh 1vh;
 }
 
 li.nav a:hover{
@@ -70,9 +71,10 @@ li.nav a:hover{
 .section_header {
   width: 100%;
   height:5vh;
-  padding: 14px 16px;
+  padding: 3vh 3vh;
   background-color: #099;
   color: #000;
+  font-size: 2vh;
   font-weight: bold;
   text-align: center;
 }
@@ -83,11 +85,11 @@ li.nav a:hover{
   display: inline;
 }
 .input_box{
-  padding: 14px 16px;
+  padding: 1vh 1vh;
 }
 /*Background stuff*/
 .background_text{
-  font:10px;
+  font-size:2vh;
   padding: 14px 16px;
   margin: 14px 16px;
   border-radius: 20px;
@@ -99,7 +101,7 @@ li.nav a:hover{
   height: 20vh;
 }
 div.background_text h3{
-  font-size: 20px;
+  font-size: 4vh;
   font-weight: bold;
 }
 #one{
@@ -132,7 +134,7 @@ Main components
 
 -------------------------------- */
 header {
-  height: 100px;
+  height: 10vh;
   width: 100%;
   line-height: 10vh;
   text-align: center;
@@ -144,16 +146,16 @@ header {
 }
 header h1 {
   color: white;
-  font-size: 18px;
+  font-size: 3vh;
 }
-@media only screen and (min-width: 1170px) {
+/*@media only screen and (min-width: 1170px) {
   header {
     height: 10vh;
   }
   header h1 {
     font-size: 24px;
   }
-}
+}*/
 
 #cd-timeline {
   position: relative;
@@ -555,7 +557,6 @@ header h1 {
     transform: translateX(0);
   }
 }
-<<<<<<< HEAD
 .myBox {
 width: 100%;
 height: 80vh;
@@ -580,7 +581,7 @@ border-radius: 10px;
 
 ::-webkit-scrollbar-thumb:hover {
 background: #88ba1c;  
-=======
+}
 
 .tabs {
   position: relative;   
@@ -632,5 +633,4 @@ background: #88ba1c;
 }
 [type=radio]:checked ~ label ~ .content {
   z-index: 1;
->>>>>>> origin/master
 }
