@@ -35,9 +35,11 @@ h1, h2 {
   font-family: "Open Sans", sans-serif;
   font-weight: bold;
 }
-
-/*Navigation*/
 ul{
+  text-align: left;
+}
+/*Navigation*/
+ul.nav {
   width:100%;
   background: #114B5F;
   color:#fff;
@@ -47,17 +49,17 @@ ul{
   vertical-align: middle;
   z-index: 100;
 }
-li {
+li.nav {
   float:left;
 }
-li a{
+li.nav a{
   display: block;
   color: #fff;
   text-align: center;
   padding: 14px 16px;
 }
 
-li a:hover{
+li.nav a:hover{
   background:#099;
 }
 .fillerbox{
@@ -91,6 +93,10 @@ li a:hover{
   border-radius: 20px;
   background: #fff;
   color: #114B5F;
+  display:inline-block;
+  width: 48%;
+  text-align: left;
+  height: 150px;
 }
 /* -------------------------------- 
 
@@ -120,7 +126,8 @@ header {
   width: 100%;
   line-height: 100px;
   text-align: center;
-  background: #08c;
+  background: url(http://clipartion.com/wp-content/uploads/2015/11/cartoon-stethoscope.png) 0 50% no-repeat #08c;
+  background-size: 3.5%;
   top:50px;
   position: fixed;
   z-index: 50;
