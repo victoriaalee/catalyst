@@ -326,6 +326,12 @@ function generateContent(jason)
 			output += concat(inNormal(jason.text.div));
 		}
 		break;
+	case "MedicationOrder":
+		output += concat(inEmphasis(jason.medicationCodeableConcept.coding[0].display));
+		var prac = retrieveReference(url,jason.prescriber.reference);
+		var string = ("<br>" + prac.name.given[0] + " " + prac.name.family[0] + ((prac.name.suffix!=undefined)?", " + prac.name.suffix[0]:""));
+		output += concat(inNormal(string));
+		break;
 	}
 	return output;
 }

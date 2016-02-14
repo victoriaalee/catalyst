@@ -156,6 +156,14 @@
 		<div id="tab8-content" class="content">
 		</div> 
 	</div>
+
+	<div class="tab">
+		<input type="radio" id="tab-9" name="tab-group-1" checked>
+		<label for="tab-9">Medication</label>
+		
+		<div id="tab9-content" class="content">
+		</div> 
+	</div>
 </div>
 	</div>
 </div>
@@ -195,11 +203,12 @@
 	{
 		var patientID = patient.id;
 		var patientName = patient.name[0].given[0] + " " + patient.name[0].family[0];
-		var obs,enc,aly,con;
+		var obs,enc,aly,con,med;
 		var obsCon = [];
 		var encCon = [];
 		var alyCon = [];
 		var conCon = [];
+		var medCon = [];
 		var obsDone = false; var encDone = false; var alyDone = false; var conDone = false;
 		var events = [];
 		var eventsContent = [];
@@ -240,6 +249,14 @@
 				setChildrenString(filterContent(conCon,"chronic"),document.getElementById("tab2-content"));
 				setChildrenString(filterContent(conCon,"active"),document.getElementById("tab7-content"));
 				setChildrenString(filterContent(conCon,"resolve"),document.getElementById("tab8-content"));
+			}
+		);
+		searchResourcePatientAsync(url,"MedicationOrder",patient,
+			function(res){
+				med = res; 
+				medCon = generateContents(med);
+				medDone = true; 
+				setChildrenString(medCon,document.getElementById("tab9-content"));
 			}
 		);
 	}
