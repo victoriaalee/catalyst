@@ -154,21 +154,6 @@
 	/////
 	function setPatient(patientID)
 	{
-
-		///*
-		changeHeader("Loading Patient " + patientIDNum);
-		var patient;
-		var patientName;
-		searchPatientIDAsync(url,patientID,
-			function(pat)
-			{
-				patient = pat;
-				patientName = patient.name[0].given[0] + " " + patient.name[0].family[0];
-				changeHeader(patientName);
-			}
-		)
-		//*/
-		
 		/*
 		var patient = searchPatientID(url, patientID);
 		var patientName = patient.name[0].given[0] + " " + patient.name[0].family[0];
@@ -207,6 +192,77 @@
 
 		//setChildren(filterContent(events,eventsContent,"allergy"),document.getElementById("tab1-content"));
 		*/
+
+		changeHeader("Loading Patient: " + patientID);
+		var patient;
+		var patientName;
+		searchPatientIDAsync(url,patientID,
+			function(pat)
+			{
+				patient = pat;
+				patientName = patient.name[0].given[0] + " " + patient.name[0].family[0];
+				changeHeader("Loading Patient: " + patientName);
+				loadEvents(patient);
+			}
+		)
+	}
+	function loadEvents(patient)
+	{
+		var patientID = patient.id;
+		var obs,enc,aly,con;
+		var obsCon = [];
+		var encCon = [];
+		var alyCon = [];
+		var conCon = [];
+		var obsDone = false; var encDone = false; var alyDone = false; var conDone = false;
+		var events = [];
+		var eventsContent = [];
+		var timelineEvents = [];
+		var timelineContent = [];
+		var dataEvents = [];
+		var dataContent = [];
+		searchResourcePatientAsync(url,"Observation",patient,
+			function(res){
+				obs = res;
+				obsCon = generateContents(obs);
+				obsDone = true; 
+			}
+		);
+		searchResourcePatientAsync(url,"Encounter",patient,
+			function(res){
+				enc = res; 
+				encCon = generateContents(enc);
+				encDone = true; 
+			}
+		);
+		searchResourcePatientAsync(url,"AllergyIntolerance",patient,
+			function(res){
+				aly = res; 
+				alyCon = generateContents(aly);
+				alyDone = true; 
+			}
+		);
+		searchResourcePatientAsync(url,"Condition",patient,
+			function(res){
+				con = res; 
+				conCon = generateContents(con);
+				conDone = true; 
+			}
+		);
+		/*
+		while(true)
+		{
+			if(obsDone && encDone && alyDone && conDone)
+			{
+				events.concat(obs);events.concat(enc);events.concat(aly);events.concat(con);
+				eventsContent.concat(obsCon);events.concat(encCon);events.concat(alyCon);events.concat(conCon);
+				setTimelineString(eventsContent);
+				break;
+			}
+		}
+		var patientName = patient.name[0].given[0] + " " + patient.name[0].family[0];
+		changeHeader(patientName);
+		*/
 	}
 	
 
@@ -237,12 +293,29 @@
 		}
 	}
 
+	function setTimelineString(contentStrings)
+	{
+		removeChildren(timeline);
+		for(var i = 0; i < contentStrings.length; i++)
+		{
+			timeline.appendChild(blockGen(contentStrings[i]));
+		}
+	}
+
 	function setData(jsonObjects)
 	{
 		removeChildren(data);
 		for(var i = 0; i < jsonObjects.length; i++)
 		{
 			data.appendChild(blockGenJSON(jsonObjects[i]));
+		}
+	}
+	function setDataString(contentStrings)
+	{
+		removeChildren(data);
+		for(var i = 0; i < contentStrings.length; i++)
+		{
+			data.appendChild(blockGen(contentStrings[i]));
 		}
 	}
 
