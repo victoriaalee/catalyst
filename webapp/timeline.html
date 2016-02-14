@@ -15,7 +15,7 @@
 
 <body>
 	<header>
-		<h1 id="headline">Responsive Vertical Timeline</h1>
+		<h1 id="headline">Loading...</h1>
 	</header>
 	
 	<section>
@@ -67,7 +67,7 @@ Hit head on concrete floor, small pool of blood leaking. Had emergency craniotom
 		<p class="data_input">Keyword:</p>
 	<input class="data_input" type="text" name="keyword" id="input2">
 	<button class="data_input" onclick="dataInput()">Submit</button>
-	<div name="dataSection">
+	<div id="data">
 
 	</div>
 	<script type="text/javascript">
@@ -86,11 +86,12 @@ Hit head on concrete floor, small pool of blood leaking. Had emergency craniotom
 <script>
 	var filter = "";
 	var url = "http://fhir2.healthintersections.com.au/open";
+
 	var patientID = "ad2f3d7c-4274-4422-a10a-8e2bc99c40";
 	//var patientID = "example";
 	
 	var timeline = document.getElementById("cd-timeline");
-	var data = document.getElementById("dataSection");
+	var data = document.getElementById("data");
 
 	var patient = searchPatientID(url, patientID);
 	var patientName = patient.name[0].given[0] + " " + patient.name[0].family[0];
@@ -102,11 +103,29 @@ Hit head on concrete floor, small pool of blood leaking. Had emergency craniotom
 	var con = searchResourcePatient(url, "Condition", patient);
 
 	var events = con.concat(aly.concat((enc.concat(obs))));
-	var eventsContent = [];
+
+	//Handle placement
+	var timelineEvents = [];
+	var timelineContent = [];
+	var dataEvents = [];
+	var dataContent = [];
 	for(i = 0; i < events.length; i++)
 	{
-		eventsContent.push(generateContent(events[i]));
+		var content = generateContent(events[i]);
+		if(fromTime(content) != null)
+		{
+			timelineEvents.push(events[i]);
+			timelineContent.push(content);
+		}
+		else
+		{
+			dataEvents.push(events[i]);
+			dataContent.push(content);
+		}
 	}
+	setTimeline(timelineEvents);
+	setData(dataEvents);
+
 	
 
 	//////
@@ -114,14 +133,14 @@ Hit head on concrete floor, small pool of blood leaking. Had emergency craniotom
 	{
 		while(dom.firstChild)
 		{
-			dom.removeChild(timeline.firstChild);
+			dom.removeChild(dom.firstChild);
 		}
 	}
 
 	function setTimeline(jsonObjects)
 	{
 		removeChildren(timeline);
-		for(i = 0; i < jsonObjects.length; i++)
+		for(var i = 0; i < jsonObjects.length; i++)
 		{
 			timeline.appendChild(blockGenJSON(jsonObjects[i]));
 		}
@@ -129,8 +148,8 @@ Hit head on concrete floor, small pool of blood leaking. Had emergency craniotom
 
 	function setData(jsonObjects)
 	{
-		removeChildren(timeline);
-		for(i = 0; i < jsonObjects.length; i++)
+		removeChildren(data);
+		for(var i = 0; i < jsonObjects.length; i++)
 		{
 			data.appendChild(blockGenJSON(jsonObjects[i]));
 		}
@@ -144,6 +163,8 @@ Hit head on concrete floor, small pool of blood leaking. Had emergency craniotom
 	//Generates a block based on the content strings
 	function blockGenJSON(jsonData)
 	{
+		if(jsonData == null)
+			return null;
 		return blockGen(generateContent(jsonData));
 	}
 	function blockGen(contentStr)
@@ -159,9 +180,14 @@ Hit head on concrete floor, small pool of blood leaking. Had emergency craniotom
 
 	//
 	function timelineInput(){
-    	filter = document.getElementById('input1').value;
-    	var filtered = filterContent(events,eventsContent,filter);
-    	setTimeline(filtered);
+    	var filter = document.getElementById('input1').value;
+    	var timeFiltered = filterContent(timelineEvents,timelineContent,filter);
+    	setTimeline(timeFiltered);
+ 	}
+ 	function dataInput(){
+    	var filter = document.getElementById('input2').value;
+    	var dataFiltered = filterContent(dataEvents,dataContent,filter);
+    	setData(dataFiltered);
  	}
 </script>
 </body>

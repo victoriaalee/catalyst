@@ -193,7 +193,10 @@ function generateContent(jason)
 		output += concat(inEmphasis(display));
 		break;
 	case "Condition":
-		output += concat(inEmphasis( jason.code.coding[0].display + ": " + jason.severity.coding[0].display));
+		if(jason.code.coding != undefined)
+			output += concat(inEmphasis( jason.code.coding[0].display + ": " + jason.severity.coding[0].display));
+		else
+			output += concat(inEmphasis(jason.code.txt));
 		output += concat(inNormal(jason.text.div));
 		break;
 	}
@@ -221,3 +224,38 @@ function inEmphasis(input) { return ("<e>" + input + "</e>");}
 function inID(input) { return ("<i>" + input + "</i>");}
 function inNormal(input) { return ("<n>" + input + "</n>");}
 function inTime(input) { return ("<t>" + input + "</t>");}
+
+function fromType(input)
+{
+	var matches = input.match("<T>(.+?)<\/T>");
+	if(matches== null)
+		return null;
+	return matches[0];
+}
+function fromEmphasis(input)
+{
+	var matches = input.match("<e>(.+?)<\/e>");
+	if(matches == null)
+		return null;
+	return matches[0];
+}
+function fromID(input)
+{
+	var matches = input.match("<i>(.+?)<\/i>");
+	if(matches == null)
+		return null;
+	return matches[0];
+}function fromNormal(input)
+{
+	var matches = input.match("<n>(.+?)<\/n>");
+	if(matches == null)
+		return null;
+	return matches[0];
+}function fromTime(input)
+{
+	var matches = input.match("<t>(.+?)<\/t>");
+	if(matches == null)
+		return null;
+	return matches[0];
+}
+
