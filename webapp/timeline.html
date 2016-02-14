@@ -92,8 +92,7 @@
        <input type="radio" id="tab-1" name="tab-group-1" checked>
        <label for="tab-1">Allergies</label>
        
-       <div class="content">
-           tab uno
+       <div id="tab1-content" class="content">
        </div> 
    </div>
     
@@ -101,8 +100,7 @@
        <input type="radio" id="tab-2" name="tab-group-1">
        <label for="tab-2">Chronic Illnesses</label>
        
-       <div class="content">
-           tab dos
+       <div id="tab2-content" class="content">
        </div> 
    </div>
     
@@ -110,8 +108,7 @@
        <input type="radio" id="tab-3" name="tab-group-1">
        <label for="tab-3">Family History</label>
      
-       <div class="content">
-           stuff
+       <div id="tab3-content" class="content">
        </div> 
    </div>
 
@@ -119,8 +116,7 @@
        <input type="radio" id="tab-4" name="tab-group-1" checked>
        <label for="tab-4">Imaging</label>
        
-       <div class="content">
-           tab uno
+       <div id="tab4-content" class="content">
        </div> 
    </div>
 
@@ -128,8 +124,7 @@
        <input type="radio" id="tab-5" name="tab-group-1" checked>
        <label for="tab-5">Lifestyle</label>
        
-       <div class="content">
-           tab uno
+       <div id="tab5-content" class="content">
        </div> 
    </div>
 
@@ -137,8 +132,7 @@
        <input type="radio" id="tab-6" name="tab-group-1" checked>
        <label for="tab-6">Vitals</label>
        
-       <div class="content">
-           tab uno
+       <div id="tab6-content" class="content">
        </div> 
    </div>
     
@@ -180,7 +174,7 @@
 		var con = searchResourcePatient(url, "Condition", patient);
 
 		var events = con.concat(aly.concat((enc.concat(obs))));
-
+		var eventsContent = [];
 		//Handle placement
 		var timelineEvents = [];
 		var timelineContent = [];
@@ -189,6 +183,7 @@
 		for(i = 0; i < events.length; i++)
 		{
 			var content = generateContent(events[i]);
+			eventsContent.push(content);
 			if(fromTime(content) != null)
 			{
 				timelineEvents.push(events[i]);
@@ -202,6 +197,8 @@
 		}
 		setTimeline(timelineEvents);
 		setData(dataEvents);
+
+		//setChildren(filterContent(events,eventsContent,"allergy"),document.getElementById("tab1-content"));
 	}
 	
 
@@ -211,6 +208,15 @@
 		while(dom.firstChild)
 		{
 			dom.removeChild(dom.firstChild);
+		}
+	}
+
+	function setChildren(jsonObjects,container)
+	{
+		removeChildren(container);
+		for(var i = 0; i < jsonObjects.length; i++)
+		{
+			container.appendChild(blockGenJSON(jsonObjects[i]));
 		}
 	}
 
