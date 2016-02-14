@@ -56,6 +56,7 @@ function getAsyncJSON(url, handle)
 			alert("Not found!");
 		}
 	}
+	req.send();
 }
 
 //Extracts first patient from the json
