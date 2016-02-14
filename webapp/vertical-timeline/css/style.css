@@ -555,6 +555,7 @@ header h1 {
     transform: translateX(0);
   }
 }
+<<<<<<< HEAD
 .myBox {
 width: 100%;
 height: 80vh;
@@ -579,4 +580,47 @@ border-radius: 10px;
 
 ::-webkit-scrollbar-thumb:hover {
 background: #88ba1c;  
+=======
+
+.tabs {
+  position: relative;   
+  min-height: 200px; /* This part sucks */
+  clear: both;
+  margin: 25px 0;
+}
+.tab {
+  float: left;
+}
+.tab label {
+  background: #eee; 
+  padding: 10px; 
+  border: 1px solid #ccc; 
+  margin-left: -1px; 
+  position: relative;
+  left: 1px;
+  color: #000;
+  font-weight: bold;
+}
+.tab [type=radio] {
+  display: none;   
+}
+.content {
+  position: absolute;
+  top: 28px;
+  left: 0;
+  background: white;
+  right: 0;
+  bottom: 0;
+  padding: 20px;
+  border: 1px solid #ccc;
+  color: #000;
+}
+[type=radio]:checked ~ label {
+  background: white;
+  border-bottom: 1px solid white;
+  z-index: 2;
+}
+[type=radio]:checked ~ label ~ .content {
+  z-index: 1;
+>>>>>>> origin/master
 }
