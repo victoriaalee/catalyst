@@ -586,11 +586,11 @@ background: #88ba1c;
 }
 
 .tabs {
-  position: relative;   
-  min-height: 200px; /* This part sucks */
+  position: relative;
   clear: both;
   margin: 25px 0;
 }
+
 .tab {
   float: left;
 }
@@ -626,7 +626,30 @@ background: #88ba1c;
   border-collapse:separate;
   border-radius:6px;
   -moz-border-radius:6px;
+
+  width: 100%;
+  height: 60vh;
+  overflow: scroll;
 }
+
+.content::-webkit-scrollbar {
+width: 12px;
+height: 12px;
+}
+
+.content::-webkit-scrollbar-track {
+border:0;
+}
+
+.content::-webkit-scrollbar-thumb {
+background: yellowgreen;  
+border-radius: 10px;
+}
+
+.content::-webkit-scrollbar-thumb:hover {
+background: #88ba1c;  
+}
+/* Lee */
 
 [type=radio]:checked ~ label {
   background: white;
