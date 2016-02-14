@@ -76,7 +76,7 @@ function searchPatientID(url,patientID)
 	return extractPatient(getJSON(url+"/Patient/_search?_id="+patientID));
 };
 //Asynchronous: handler(patient)
-function searchPatientID(url,patientID,handler)
+function searchPatientIDAsync(url,patientID,handler)
 {
 	getAsyncJSON(url+"/Patient/_search?_id"+patientID,
 		function(json){
