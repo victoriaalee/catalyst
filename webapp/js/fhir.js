@@ -135,7 +135,7 @@ function searchResourcePatientAsync(url,resource,patient,handle)
 	return searchResourcePatientIDAsync(url,resource,patient.id,handle);
 }
 
-function filterContent(jsonData,content,query) {
+function filterJSONContent(jsonData,content,query) {
 	if(query == "")
 		return jsonData;
 	cornerCase0 = false;
@@ -169,6 +169,40 @@ function filterContent(jsonData,content,query) {
 	return resultsArr.filter( function(el) { return excludeArr.indexOf(el) < 0; } );		// remove nots
 }
 
+function filterContent(content,query) {
+	if(query == "")
+		return content;
+	cornerCase0 = false;
+	results = new Set();
+	exclude = new Set();
+	query = query.toLowerCase();
+	queryArray = query.split(", ");
+
+	for (var j = 0; j < queryArray.length; j++) {
+		if (queryArray[j].indexOf("&") != -1) {
+			newQuery = queryArray[j].split(" & ");
+			results = containsContent(content,newQuery,results);
+		} else if (query[j].charAt(0) == '-') {
+			newQuery = [queryArray[j].substring(1)];
+			exclude = containsContent(content,newQuery,exclude);
+
+			if (queryArray.length == 1) {
+				resultsArr = content;
+				cornerCase0 = true;
+			}
+		}
+		else {
+			newQuery = [queryArray[j]];
+			results = containsContent(content,newQuery,results);
+		}
+	}
+	if (!cornerCase0)
+		var resultsArr = Array.from(results);
+	var excludeArr = Array.from(exclude);
+
+	return resultsArr.filter( function(el) { return excludeArr.indexOf(el) < 0; } );		// remove nots
+}
+
 function containsWord(jsonData,content,query,results) {
 	for (i = 0; i < jsonData.length; i++) {
 		tmp = true;
@@ -181,6 +215,24 @@ function containsWord(jsonData,content,query,results) {
 		}
 		if (tmp) {
 			results.add(jsonData[i]);
+		}
+	}
+
+	return results;
+}
+
+function containsContent(content,query,results) {
+	for (i = 0; i < content.length; i++) {
+		tmp = true;
+		for (j = 0; j < query.length; j++) {
+			pattern = new RegExp(query[j]);
+			if (!pattern.test(content[i].toLowerCase())) {
+				tmp = false;
+				break;
+			}
+		}
+		if (tmp) {
+			results.add(content[i]);
 		}
 	}
 
