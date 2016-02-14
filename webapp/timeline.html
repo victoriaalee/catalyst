@@ -19,16 +19,21 @@
 	</header>
 	
 	<section>
-		<ul>
+		<ul class="nav">
 			<li class="nav"><a href="#timeline">Timeline</a></li>
 			<li class="nav"><a href="#background">Background</a></li>
 			<li class="nav"><a href="#data">Data</a></li>
-		</ul>
+		</ul class="nav">
+	<a name="timeline"/>
+
+	
 	</section>
 
 	<a name="timeline"/>
 	<div class="fillerbox"></div>
 	<div class="section_header">Timeline</div>
+	
+	<div class="myBox">
 	<div class="input_box">
 		<p class="data_input">Keyword:</p>
 		<input class="data_input" type="text" name="keyword" id="input1">
@@ -43,29 +48,103 @@
 
 		
 	</section> 
+	</div>
 	<a name="background"/>
 	<div class="fillerbox"></div>
-	<div class="section_header">Background</div>
+	<div class="section_header" id="one">Background</div>
+	<div class="myBox">
+	<
 	<div class="background_text">
 	<h3>Past Events:</h3>
-	<p>
-Hit head on concrete floor, small pool of blood leaking. Had emergency craniotomy, pressure relieved, then could not speak or swallow. Transferred to rehab to walk unassisted, restore speech, and swallow sufficiently.</p>
-	</div>
-	<div class="background_text">
+	<ul>
+		<li>Hit head on concrete floor</li> 
+		<li>Small pool of blood leaking</li> 
+		<li>Had emergency craniotomy, pressure relieved</li>
+		<li>Could not speak or swallow</li>
+		<li>Transferred to rehab to walk unassisted</li>
+		<li>Restore speech, and swallow sufficiently.</li>
+	</ul>
+	</div><div class="background_text" id="two">
 	<h3>Current Situations:
 </h3>
-	<p>Three months later, speech improved, almost regular diet, exercise plan to eliminate cane usage/ swallowing.</p>
+	<ul>
+		<li>Three months since incident</li>
+		<li>speech improved</li>
+		<li>almost regular diet</li>
+		<li>exercise plan to eliminate cane usage</li> 
+		<li>swallowing</li>
+	</ul>
 	</div>
+</div>
 
 	<a name="data"/>
 	<div class="fillerbox"></div>
 	<div class="section_header">Patient Data</div>
+	<div class="myBox">
 	<div class="input_box">
 		<p class="data_input">Keyword:</p>
 	<input class="data_input" type="text" name="keyword" id="input2">
 	<button class="data_input" onclick="dataInput()">Submit</button>
-	<div id="data">
+	
+	<div class="tabs">
+    
+   <div class="tab">
+       <input type="radio" id="tab-1" name="tab-group-1" checked>
+       <label for="tab-1">Allergies</label>
+       
+       <div class="content">
+           tab uno
+       </div> 
+   </div>
+    
+   <div class="tab">
+       <input type="radio" id="tab-2" name="tab-group-1">
+       <label for="tab-2">Chronic Illnesses</label>
+       
+       <div class="content">
+           tab dos
+       </div> 
+   </div>
+    
+    <div class="tab">
+       <input type="radio" id="tab-3" name="tab-group-1">
+       <label for="tab-3">Family History</label>
+     
+       <div class="content">
+           stuff
+       </div> 
+   </div>
 
+   <div class="tab">
+       <input type="radio" id="tab-4" name="tab-group-1" checked>
+       <label for="tab-4">Imaging</label>
+       
+       <div class="content">
+           tab uno
+       </div> 
+   </div>
+
+   <div class="tab">
+       <input type="radio" id="tab-5" name="tab-group-1" checked>
+       <label for="tab-5">Lifestyle</label>
+       
+       <div class="content">
+           tab uno
+       </div> 
+   </div>
+
+   <div class="tab">
+       <input type="radio" id="tab-6" name="tab-group-1" checked>
+       <label for="tab-6">Vitals</label>
+       
+       <div class="content">
+           tab uno
+       </div> 
+   </div>
+    
+</div>
+	<div id="data">
+	</div>
 	</div>
 	<script type="text/javascript">
  function dataInput(){
@@ -73,7 +152,6 @@ Hit head on concrete floor, small pool of blood leaking. Had emergency craniotom
  }
 </script>
 </div>
-	<div class="fillerbox"></div>
 	<!-- cd-timeline -->
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <script src="vertical-timeline/js/main.js"></script> <!-- Resource jQuery -->
