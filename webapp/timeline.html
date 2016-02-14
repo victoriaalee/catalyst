@@ -103,30 +103,15 @@
 	
 	<div class="tab">
 		<input type="radio" id="tab-2" name="tab-group-1">
-		<label for="tab-2">Conditions</label>
+		<label for="tab-2">Chronic Illnesses</label>
 	
 		<div id="tab2-content" class="content">
 		</div> 
 	</div>
+
 	<div class="tab">
 		<input type="radio" id="tab-3" name="tab-group-1">
-		<label for="tab-3">Observations</label>
-	 
-		<div id="tab3-content" class="content">
-		</div> 
-	</div>
-	<!--
-	<div class="tab">
-		<input type="radio" id="tab-4" name="tab-group-1" checked>
-		<label for="tab-4">Vitals</label>
-		<div id="tab4-content" class="content">
-		</div> 
-	</div>
-	-->
-	<!--
-	<div class="tab">
-		<input type="radio" id="tab-3" name="tab-group-1">
-		<label for="tab-3">Family History</label>
+		<label for="tab-3">Vitals</label>
 	 
 		<div id="tab3-content" class="content">
 		</div> 
@@ -142,7 +127,7 @@
 
 	<div class="tab">
 		<input type="radio" id="tab-5" name="tab-group-1" checked>
-		<label for="tab-5">Lifestyle</label>
+		<label for="tab-5">Life</label>
 		
 		<div id="tab5-content" class="content">
 		</div> 
@@ -150,13 +135,27 @@
 
 	<div class="tab">
 		<input type="radio" id="tab-6" name="tab-group-1" checked>
-		<label for="tab-6">Vitals</label>
+		<label for="tab-6">Family History</label>
 		
 		<div id="tab6-content" class="content">
 		</div> 
 	</div>
-	-->
-	
+
+	<div class="tab">
+		<input type="radio" id="tab-7" name="tab-group-1" checked>
+		<label for="tab-7">Active Conditions</label>
+		
+		<div id="tab7-content" class="content">
+		</div> 
+	</div>
+
+	<div class="tab">
+		<input type="radio" id="tab-8" name="tab-group-1" checked>
+		<label for="tab-8">Resolved Conditions</label>
+		
+		<div id="tab8-content" class="content">
+		</div> 
+	</div>
 </div>
 	</div>
 </div>
@@ -170,6 +169,7 @@
 	var timeline = document.getElementById("cd-timeline");
 	var data = document.getElementById("data");
 	var url = "http://fhir2.healthintersections.com.au/open";
+	//var patientIDNum = "ad2f3d7c-4274-4422-a10a-8e2bc99c40";
 	var patientIDNum = "ad2f3d7c-4274-4422-a10a-8e2bc99c40";
 	timelineContent = [];
 	dataContent = [];
@@ -208,8 +208,10 @@
 				obs = res;
 				obsCon = generateContents(obs);
 				obsDone = true;
-				setChildrenString(obsCon,document.getElementById("tab3-content"));
-				setChildrenString(filterContent(obsCon,"blood, pressure",document.getElementById("tab4-content")));
+				setChildrenString(filterContent(obsCon,"family"),document.getElementById("tab6-content"));
+				setChildrenString(filterContent(obsCon,"CT, scan"),document.getElementById("tab4-content"));
+				setChildrenString(filterContent(obsCon,"finding"),document.getElementById("tab5-content"));
+				setChildrenString(filterContent(obsCon,"blood, pressure, serum"),document.getElementById("tab3-content"));
 			}
 		);
 		searchResourcePatientAsync(url,"Encounter",patient,
@@ -235,8 +237,9 @@
 				con = res; 
 				conCon = generateContents(con);
 				conDone = true; 
-				//setChildrenString(filterContent(conCon,"chronic"),document.getElementById("tab2-content"));
-				setChildrenString(conCon,document.getElementById("tab2-content"));
+				setChildrenString(filterContent(conCon,"chronic"),document.getElementById("tab2-content"));
+				setChildrenString(filterContent(conCon,"active"),document.getElementById("tab7-content"));
+				setChildrenString(filterContent(conCon,"resolve"),document.getElementById("tab8-content"));
 			}
 		);
 	}

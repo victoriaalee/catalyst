@@ -313,7 +313,7 @@ function generateContent(jason)
 	case "Condition":
 		if(jason.code.coding != undefined)
 		{
-			output += concat(inEmphasis( jason.clinicalStatus + ": " +jason.code.coding[0].display));
+			output += concat(inEmphasis(jason.code.coding[0].display + ": " + jason.clinicalStatus));
 			//Get the practitioner
 			var prac = retrieveReference(url,jason.asserter.reference);
 			var string = jason.severity.coding[0].display;
